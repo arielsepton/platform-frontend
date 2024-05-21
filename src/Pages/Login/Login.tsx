@@ -1,30 +1,31 @@
 /// <reference types="vite-plugin-svgr/client" />
-
+import { useForm } from "react-hook-form";
 import AppIcon from "../../assets/app-icon.svg?react";
 import Modal from "components/Modal/Modal";
-import React, { useState } from "react";
+import React from "react";
 import Typography from "components/Typography/Typography";
 import Button from "components/Button/Button";
-import LoginInput from "components/Login/Input/LoginInput";
 import { APP_NAME } from "src/common/consts";
+import Input from "components/Form/Input/Input";
 
 const Login: React.FC = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [usernameError, setUsernameError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
 
-  const handleLogin = () => {
+  const onSubmit = (data: any) => {
     // TODO: perhaps create "useAuth" hook and call it here.
     // const { login } = useAuth();
-    console.log("Logging in...");
+    console.log(data);
+    console.log(errors);
   };
 
   return (
     <div className="h-screen bg-mono/basic-15">
       <div className="h-screen bg-cover bg-no-repeat bg-login-pattern opacity-30">
         <Modal
-          closeOnEscape={true}
           children={
             <div className="flex flex-col items-center justify-center">
               <div className="flex items-center justify-center pb-4">
@@ -41,29 +42,40 @@ const Login: React.FC = () => {
                   children={`Login to ${APP_NAME}`}
                   className="text-mono/basic-1 gap-2 mb-5 h-8"
                 />
-                <LoginInput
-                  error={usernameError}
-                  label="Username"
-                  placeholder="Insert username..."
-                  setValue={setUsername}
-                  value={username}
-                />
-                <LoginInput
-                  error={passwordError}
-                  label="Password"
-                  placeholder="Insert password..."
-                  setValue={setPassword}
-                  value={password}
-                  inputType={"password"}
-                />
-                <div className="flex items-center justify-center pt-3 h-13">
-                  <Button
-                    variant="primary"
-                    onClick={handleLogin}
-                    children="Login"
-                    className="w-[140px]"
+
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <Input
+                    type="text"
+                    {...register("username", {
+                      required: "username is required",
+                    })}
+                    error={errors.username?.message as string}
+                    label="Username"
+                    placeholder="Insert username..."
                   />
-                </div>
+                  <Input
+                    type="password"
+                    {...register("password", {
+                      required: "password is required",
+                      minLength: {
+                        value: 6,
+                        message: "password should be longer than 6 characters",
+                      },
+                    })}
+                    error={errors.password?.message as string}
+                    label="Password"
+                    placeholder="Insert password..."
+                  />
+
+                  <div className="flex items-center justify-center pt-3 h-13">
+                    <Button
+                      variant="primary"
+                      onClick={handleSubmit(onSubmit)}
+                      children="Login"
+                      className="w-[140px]"
+                    />
+                  </div>
+                </form>
               </div>
             </div>
           }
