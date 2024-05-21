@@ -4,7 +4,7 @@ import "src/index.css";
 describe("Modal Component", () => {
   it("renders children correctly", () => {
     const childText = "Test Child";
-    cy.mount(<Modal children={childText} />);
+    cy.mount(<Modal>{childText}</Modal>);
     cy.contains(childText).should("exist");
   });
 
@@ -12,7 +12,9 @@ describe("Modal Component", () => {
     const closeModalMock = cy.stub().as("closeModal");
     const childText = "Test Child";
     cy.mount(
-      <Modal children={childText} setShowModal={closeModalMock} closeOnEscape />
+      <Modal setShowModal={closeModalMock} closeOnEscape>
+        {childText}
+      </Modal>
     );
     cy.get("@closeModal").should("not.have.been.called");
     cy.get("body").trigger("keydown", { key: "Escape" });
@@ -23,11 +25,9 @@ describe("Modal Component", () => {
     const closeModalMock = cy.stub().as("closeModal");
     const childText = "Test Child";
     cy.mount(
-      <Modal
-        children={childText}
-        setShowModal={closeModalMock}
-        closeOnEscape={false}
-      />
+      <Modal setShowModal={closeModalMock} closeOnEscape={false}>
+        {childText}
+      </Modal>
     );
     cy.get("@closeModal").should("not.have.been.called");
     cy.get("body").trigger("keydown", { key: "Escape" });

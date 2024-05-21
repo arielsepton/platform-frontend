@@ -21,14 +21,14 @@ export type TypographyVariants =
   | "accent-md";
 
 interface TypographyProps {
-  tag?: TypographyTags;
+  as?: TypographyTags;
   variant?: TypographyVariants;
   children: ReactNode;
   className?: string;
 }
 
 const Typography: React.FC<TypographyProps> = ({
-  tag: Tag = "p",
+  as: Tag = "p",
   variant,
   children,
   className,

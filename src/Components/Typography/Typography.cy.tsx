@@ -44,7 +44,7 @@ describe("Typography component", () => {
     ];
 
     typographyTags.forEach((tag, index) => {
-      cy.mount(<Typography tag={tag}>Heading {index}</Typography>);
+      cy.mount(<Typography as={tag}>Heading {index}</Typography>);
       cy.get(tag).contains(`Heading ${index}`);
     });
 

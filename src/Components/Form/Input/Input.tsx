@@ -10,24 +10,22 @@ interface InputProps {
   label?: string;
   placeholder?: string;
   error?: string;
+  className?: string;
 }
 
 const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
-  ({ type, placeholder, error, label, ...props }, ref) => {
+  ({ type, placeholder, error, label, className, ...props }, ref) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const toggleShowPassword = () => {
-      console.log(ref);
       setShowPassword(!showPassword);
     };
 
     return (
-      <div className="flex flex-col">
-        <Typography
-          variant="label-md"
-          children={label}
-          className="text-mono/basic-5 mb-1"
-        />
+      <div className={`flex flex-col ${className || ""}`}>
+        <Typography variant="label-md" className="text-mono/basic-5 mb-1">
+          {label}
+        </Typography>
         <div className="min-h-min	relative">
           <input
             ref={ref}
@@ -56,11 +54,12 @@ const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
         </div>
         <Typography
           variant="body-sm"
-          children={error}
           className={`text-velvet/basic-5 mb-1 pt-0.75 h-5 ${
             error ? "" : "opacity-0"
           }`}
-        />
+        >
+          {error}
+        </Typography>
       </div>
     );
   }
