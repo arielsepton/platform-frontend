@@ -51,10 +51,9 @@ const Button: React.FC<ButtonProps> = ({
       disabled={disabled}
     >
       {icon && (iconPosition === "top" || iconPosition === "left") && (
-        <Typography
-          className={`icon-${iconPosition} ${typographyClass}`}
-          children={icon}
-        />
+        <Typography className={`icon-${iconPosition} ${typographyClass}`}>
+          {icon}
+        </Typography>
       )}
 
       <Typography variant={typographyVariant} className={`${typographyClass}`}>
@@ -62,10 +61,9 @@ const Button: React.FC<ButtonProps> = ({
       </Typography>
 
       {icon && (iconPosition === "right" || iconPosition === "bottom") && (
-        <Typography
-          className={`icon-${iconPosition} ${typographyClass}`}
-          children={icon}
-        />
+        <Typography className={`icon-${iconPosition} ${typographyClass}`}>
+          {icon}
+        </Typography>
       )}
     </button>
   );

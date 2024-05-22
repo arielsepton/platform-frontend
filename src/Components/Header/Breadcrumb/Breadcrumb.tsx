@@ -16,17 +16,19 @@ export type BreadcrumbItem = {
 const Breadcrumb = ({ breadcrumb }: BreadcrumbProps) => (
   <div className="flex items-center text-mono/basic-4">
     <div className="flex group items-center gap-0.5	">
-      <Typography
-        variant="headline-xs"
-        children={breadcrumb.text}
-        className="group-hover-white"
-      />
+      <Typography variant="headline-xs" className="group-hover-white">
+        {breadcrumb.text}
+      </Typography>
       {breadcrumb.isDropdown && (
-        <Typography children={<ArrowDown />} className="group-hover-white" />
+        <Typography className="group-hover-white">
+          <ArrowDown />
+        </Typography>
       )}
     </div>
     {breadcrumb.shouldAddDivider && (
-      <Typography className=" px-4" children={<Divider />} />
+      <Typography className=" px-4">
+        <Divider />
+      </Typography>
     )}
   </div>
 );

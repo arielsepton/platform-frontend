@@ -32,16 +32,15 @@ const Header = ({ breadcrumbs, user }: HeaderProps) => {
     <div className="w-full text-left bg-mono/basic-16 h-17 items-center justify-between gap-4 flex">
       <nav aria-label="breadcrumb">
         <div className="flex w-fit flex-wrap items-center rounded-md bg-blue-gray-50 bg-opacity-60 py-2 pl-5.5">
-          <Typography
-            children={
-              <AppIcon style={{ width: "32.26px", height: "32.26px" }} />
-            }
-          />
+          <Typography>
+            <AppIcon style={{ width: "32.26px", height: "32.26px" }} />
+          </Typography>
           <Typography
             variant="headline-sm"
-            children={APP_NAME}
             className="text-mono/basic-4 pl-2.5 pr-4.25"
-          />
+          >
+            {APP_NAME}
+          </Typography>
           <div className="flex cursor-pointer items-center antialiased transition-colors duration-100 bg-mono/basic-14 rounded-full h-fit">
             <div className="flex items-center py-2.25 pl-4 pr-5">
               {breadcrumbs.map((breadcrumb) => (
@@ -64,13 +63,13 @@ const Header = ({ breadcrumbs, user }: HeaderProps) => {
         <div className="group flex items-center cursor-pointer">
           <Typography
             variant="body-md"
-            children={user.username}
             className="text-mono/basic-4 pl-3 group-hover-white"
-          />
-          <Typography
-            children={<ArrowDown />}
-            className="text-mono/basic-4 group-hover-white"
-          />
+          >
+            {user.username}
+          </Typography>
+          <Typography className="text-mono/basic-4 group-hover-white">
+            <ArrowDown />
+          </Typography>
         </div>
       </div>
     </div>

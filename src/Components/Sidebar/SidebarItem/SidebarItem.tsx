@@ -33,11 +33,11 @@ const SidebarItem = ({
             ? "text-green/basic-6 "
             : "text-mono/basic-4 group-hover:text-mono/basic-1"
         } `}
-        children={item.icon}
-      />
+      >
+        {item.icon}
+      </Typography>
       <Typography
         variant="headline-xs"
-        children={item.label}
         className={`transition-all duration-300
          ${isSidebarExpanded ? "opacity-1" : "opacity-0"} 
          ${
@@ -46,7 +46,9 @@ const SidebarItem = ({
              : "text-base font-normal"
          } 
           group-hover:text-mono/basic-1`}
-      />
+      >
+        {item.label}
+      </Typography>
     </div>
   );
 };
