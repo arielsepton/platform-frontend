@@ -1,5 +1,6 @@
 /// <reference types="vite-plugin-svgr/client" />
 import { useForm } from "react-hook-form";
+
 import AppIcon from "../../assets/app-icon.svg?react";
 import Modal from "components/Modal/Modal";
 import React from "react";
@@ -7,6 +8,7 @@ import Typography from "components/Typography/Typography";
 import Button from "components/Button/Button";
 import { APP_NAME } from "src/common/consts";
 import Input from "components/Form/Input/Input";
+import { useFetchMutation, useFetchQuery } from "src/hooks/useFetchQuery";
 
 const Login: React.FC = () => {
   const {
@@ -15,11 +17,46 @@ const Login: React.FC = () => {
     handleSubmit,
   } = useForm();
 
+  const query = useFetchQuery<Todo[]>("todos", "https://example.com/todos", {
+    method: "GET",
+  });
+  const mutation = useFetchMutation<Todo, Todo>(
+    "https://example.com/todos",
+    "title",
+    {
+      method: "POST",
+    }
+  );
+
+  type Todo = {
+    id: number;
+    title: string;
+  };
+
+  const useAuth = useFetchMutation<Todo, Todo>(
+    "https://example.com/auth",
+    "title",
+    {
+      method: "POST",
+    }
+  );
+
   const onSubmit = (data: any) => {
     // TODO: perhaps create "useAuth" hook and call it here.
-    // const { login } = useAuth();
-    console.log(data);
+
+    useAuth.mutate({
+      id: Date.now(),
+      title: "Do Laundry",
+    });
+    console.log("useAuth.data");
+
+    console.log(useAuth);
     console.log(errors);
+    mutation.mutate({
+      id: Date.now(),
+      title: "Do Laundry",
+    });
+    console.log(mutation);
   };
 
   return (
@@ -52,6 +89,7 @@ const Login: React.FC = () => {
                   })}
                   error={errors.username?.message as string}
                   label="Username"
+                  autoComplete="username"
                   placeholder="Insert username..."
                 />
                 <Input
@@ -78,6 +116,14 @@ const Login: React.FC = () => {
                 </div>
               </form>
             </div>
+            <Typography
+              variant="body-sm"
+              className={`text-velvet/basic-5 mb-1 pt-0.75 h-5 ${
+                mutation.error ? "" : "opacity-0"
+              }`}
+            >
+              An error occurred: {` ${mutation.error}`}
+            </Typography>
           </div>
         </Modal>
       </div>
