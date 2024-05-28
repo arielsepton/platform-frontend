@@ -157,7 +157,7 @@ export default {
         5.5: "22px",
       },
       backgroundImage: {
-        "login-pattern": "url('login-background.png')",
+        "login-pattern": "url('/public/login-background.png')",
       },
       fontFamily: {
         sans: ['"Red Hat Display"', '"Red Hat Text"', "sans-serif"],

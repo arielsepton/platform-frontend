@@ -1,10 +1,17 @@
 import "src/index.css";
 import Login from "./Login";
 import { APP_NAME } from "src/common/consts";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 describe("Login Component", () => {
+  const queryClient = new QueryClient();
+
   beforeEach(() => {
-    cy.mount(<Login />);
+    cy.mount(
+      <QueryClientProvider client={queryClient}>
+        <Login />
+      </QueryClientProvider>
+    );
   });
 
   it("renders login modal with correct elements", () => {

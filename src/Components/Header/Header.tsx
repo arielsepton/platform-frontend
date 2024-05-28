@@ -1,11 +1,15 @@
 /// <reference types="vite-plugin-svgr/client" />
+import { ReactNode, Suspense, useEffect, useState } from "react";
 import AppIcon from "../../assets/app-icon.svg?react";
 import ArrowDown from "../../assets/arrow-down.svg?react";
 
 import Typography from "components/Typography/Typography";
 import Breadcrumb, { BreadcrumbItem } from "./Breadcrumb/Breadcrumb";
-import { useEffect, useState } from "react";
+import { importComponent } from "src/utils/importComponent";
 import { APP_NAME } from "src/common/consts";
+import { redirect, useRouter } from "@tanstack/react-router";
+import { useAuth } from "src/hooks/useAuth";
+import { lazy } from "react";
 
 type HeaderProps = {
   breadcrumbs: BreadcrumbItem[];
@@ -13,20 +17,23 @@ type HeaderProps = {
 };
 
 const Header = ({ breadcrumbs, user }: HeaderProps) => {
-  const [importedThumbnail, setimportedThumbnail] =
-    useState<React.ReactNode>(null);
+  const router = useRouter();
+  const { signOut } = useAuth();
+  const [importedThumbnail, setimportedThumbnail] = useState<ReactNode>(null);
 
   useEffect(() => {
-    const importComponent = async () => {
-      const module = await import(
-        `../../assets/account-thumbnails/color-${user.thumbnail}.svg?react`
-      );
-      const ThumbnailComponent = module.default;
-      setimportedThumbnail(<ThumbnailComponent />);
-    };
-
-    importComponent();
+    const thumbnailIconPath: string = `../assets/account-thumbnails/color-${user.thumbnail}.svg?react`;
+    importComponent(thumbnailIconPath).then((component) => {
+      setimportedThumbnail(component);
+    });
   }, [user.thumbnail]);
+
+  const MarkdownPreview = lazy(
+    () =>
+      import(
+        `../../assets/account-thumbnails/color-${user.thumbnail}.svg?react`
+      )
+  );
 
   return (
     <div className="w-full text-left bg-mono/basic-16 h-17 items-center justify-between gap-4 flex">
@@ -52,7 +59,11 @@ const Header = ({ breadcrumbs, user }: HeaderProps) => {
       </nav>
       <div className="place-self-end flex items-center h-full pr-5.5">
         <div className="relative flex justify-center items-center">
-          {importedThumbnail}
+          {/* {importedThumbnail} */}
+          <Suspense fallback={<></>}>
+            <MarkdownPreview />
+          </Suspense>
+
           <div className="text-white absolute inset-0 flex justify-center items-center">
             {user.username
               .toUpperCase()
@@ -60,7 +71,13 @@ const Header = ({ breadcrumbs, user }: HeaderProps) => {
               .map((n) => n[0])}
           </div>
         </div>
-        <div className="group flex items-center cursor-pointer">
+        <div
+          className="group flex items-center cursor-pointer"
+          onClick={async () => {
+            signOut();
+            router.invalidate();
+          }}
+        >
           <Typography
             variant="body-md"
             className="text-mono/basic-4 pl-3 group-hover-white"

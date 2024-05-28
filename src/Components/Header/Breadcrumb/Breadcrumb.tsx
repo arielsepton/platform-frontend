@@ -15,6 +15,11 @@ export type BreadcrumbItem = {
 
 const Breadcrumb = ({ breadcrumb }: BreadcrumbProps) => (
   <div className="flex items-center text-mono/basic-4">
+    {breadcrumb.shouldAddDivider && (
+      <Typography className=" px-4">
+        <Divider />
+      </Typography>
+    )}
     <div className="flex group items-center gap-0.5	">
       <Typography variant="headline-xs" className="group-hover-white">
         {breadcrumb.text}
@@ -25,11 +30,6 @@ const Breadcrumb = ({ breadcrumb }: BreadcrumbProps) => (
         </Typography>
       )}
     </div>
-    {breadcrumb.shouldAddDivider && (
-      <Typography className=" px-4">
-        <Divider />
-      </Typography>
-    )}
   </div>
 );
 

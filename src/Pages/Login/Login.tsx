@@ -1,5 +1,5 @@
 /// <reference types="vite-plugin-svgr/client" />
-import { useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 import AppIcon from "../../assets/app-icon.svg?react";
 import Modal from "components/Modal/Modal";
@@ -8,32 +8,31 @@ import Typography from "components/Typography/Typography";
 import Button from "components/Button/Button";
 import { APP_NAME } from "src/common/consts";
 import Input from "components/Form/Input/Input";
-import { useFetchMutation, useFetchQuery } from "src/hooks/useFetchQuery";
+import { useFetchMutation } from "src/hooks/useFetchQuery";
+import { redirect } from "@tanstack/react-router";
+import { useRouter } from "@tanstack/react-router";
+import { useAuth } from "src/hooks/useAuth";
 
 const Login: React.FC = () => {
+  const router = useRouter();
+  const { signIn } = useAuth();
+
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
 
-  const query = useFetchQuery<Todo[]>("todos", "https://example.com/todos", {
-    method: "GET",
-  });
-  const mutation = useFetchMutation<Todo, Todo>(
-    "https://example.com/todos",
-    "title",
-    {
-      method: "POST",
-    }
-  );
-
-  type Todo = {
-    id: number;
-    title: string;
+  type AuthResponse = {
+    isAuthorized: boolean;
   };
 
-  const useAuth = useFetchMutation<Todo, Todo>(
+  type AuthBody = {
+    username: string;
+    password: string;
+  };
+
+  const useAuthenticate = useFetchMutation<AuthBody, AuthResponse>(
     "https://example.com/auth",
     "title",
     {
@@ -41,22 +40,15 @@ const Login: React.FC = () => {
     }
   );
 
-  const onSubmit = (data: any) => {
-    // TODO: perhaps create "useAuth" hook and call it here.
-
-    useAuth.mutate({
-      id: Date.now(),
-      title: "Do Laundry",
-    });
-    console.log("useAuth.data");
-
-    console.log(useAuth);
-    console.log(errors);
-    mutation.mutate({
-      id: Date.now(),
-      title: "Do Laundry",
-    });
-    console.log(mutation);
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    try {
+      await useAuthenticate.mutateAsync(data as AuthBody);
+      signIn();
+      router.invalidate();
+      throw redirect({
+        to: "/",
+      });
+    } catch (error) {}
   };
 
   return (
@@ -119,10 +111,10 @@ const Login: React.FC = () => {
             <Typography
               variant="body-sm"
               className={`text-velvet/basic-5 mb-1 pt-0.75 h-5 ${
-                mutation.error ? "" : "opacity-0"
+                useAuthenticate.isError ? "" : "opacity-0"
               }`}
             >
-              An error occurred: {` ${mutation.error}`}
+              An error occurred: {` ${JSON.stringify(useAuthenticate.data)}`}
             </Typography>
           </div>
         </Modal>

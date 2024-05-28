@@ -27,7 +27,7 @@ export function useFetchQuery<T>(
   return useQuery<T>({ queryKey: [key], queryFn });
 }
 
-export function useFetchMutation<T, V>(
+export function useFetchMutation<V, T>(
   url: string,
   key: string,
   options?: RequestInit
@@ -43,6 +43,9 @@ export function useFetchMutation<T, V>(
   return useMutation<T, Error, V, unknown>({
     mutationFn,
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [key] });
+    },
+    onError: () => {
       queryClient.invalidateQueries({ queryKey: [key] });
     },
   });

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { sidebarItems } from "./items";
 import SidebarItem from "./SidebarItem/SidebarItem";
 
@@ -6,9 +6,9 @@ export default function SideBar() {
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
-  const toggleSidebar = () => {
+  const toggleSidebar = useCallback(() => {
     setIsSidebarExpanded(!isSidebarExpanded);
-  };
+  }, [isSidebarExpanded]);
 
   return (
     <div

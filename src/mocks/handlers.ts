@@ -43,7 +43,7 @@ const secretsHandlers: HttpHandler[] = [
     console.log(`GET todos sent, params: ${JSON.stringify(requestParams)}`);
     return HttpResponse.json([{ id: 1, title: "hi" }]);
   }),
-  http.post(`${baseEndpoint}/todos`, async ({ request, params }) => {
+  http.post(`${baseEndpoint}/todos`, async ({ request }) => {
     const requestData = await request.json();
     console.log(`POST todos sent , request:  ${JSON.stringify(requestData)}`);
     return HttpResponse.json({
@@ -65,13 +65,15 @@ const secretsHandlers: HttpHandler[] = [
 ];
 
 const authHandlers: HttpHandler[] = [
-  http.post(`${baseEndpoint}/auth`, async ({ request, params }) => {
+  http.post(`${baseEndpoint}/auth`, async ({ request }) => {
     const requestData = await request.json();
     console.log(`POST auth sent , request:  ${JSON.stringify(requestData)}`);
     return HttpResponse.json({
-      id: 1,
-      title: "hi",
+      isAuthorized: true,
     });
+    // return new HttpResponse("Not Authorized", {
+    //   status: 401,
+    // });
   }),
 ];
 
