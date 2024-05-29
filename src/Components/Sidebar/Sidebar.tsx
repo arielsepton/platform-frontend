@@ -1,10 +1,15 @@
-import { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { sidebarItems } from "./items";
 import SidebarItem from "./SidebarItem/SidebarItem";
+import { isPathMatching } from "src/utils/isPathMatching";
+import { Link } from "@tanstack/react-router";
 
-export default function SideBar() {
+export type SidebarProps = {
+  currentPath: string;
+};
+
+const Sidebar = ({ currentPath }: SidebarProps) => {
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
   const toggleSidebar = useCallback(() => {
     setIsSidebarExpanded(!isSidebarExpanded);
@@ -19,15 +24,19 @@ export default function SideBar() {
     >
       <div className="lg:block bg-mono/basic-13 h-full font-sans rounded-none border-none pt-9 gap-1 px-3">
         {sidebarItems.map((item) => (
-          <SidebarItem
-            selectedOption={selectedOption}
-            onOptionSelect={setSelectedOption}
-            item={item}
-            isSidebarExpanded={isSidebarExpanded}
-            key={item.label}
-          />
+          <Link to={item.path} key={item.label}>
+            <SidebarItem
+              // selectedOption={isPathMatching(item.path, currentPath)}
+              selectedOption={true}
+              item={item}
+              isSidebarExpanded={isSidebarExpanded}
+              // key={item.label}
+            />
+          </Link>
         ))}
       </div>
     </div>
   );
-}
+};
+
+export default React.memo(Sidebar);

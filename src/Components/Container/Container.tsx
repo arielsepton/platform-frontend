@@ -1,4 +1,5 @@
 import { ReactNode } from "@tanstack/react-router";
+import React from "react";
 
 interface ContainerProps {
   children?: ReactNode;
@@ -12,4 +13,4 @@ const Container: React.FC<ContainerProps> = ({ children }) => (
   </div>
 );
 
-export default Container;
+export default React.memo(Container);

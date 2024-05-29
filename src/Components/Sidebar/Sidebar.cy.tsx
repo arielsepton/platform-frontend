@@ -3,11 +3,13 @@ import { sidebarItems } from "./items";
 import "src/index.css";
 
 describe("SideBar component", () => {
-  beforeEach(() => {
-    cy.mount(<SideBar />);
-  });
+  // beforeEach(() => {
+  //   cy.mount(<SideBar currentPath="/projects/mytestproject/members" />);
+  // });
 
   it("renders sidebar items correctly", () => {
+    cy.mount(<SideBar currentPath="" />);
+
     sidebarItems.forEach((item) => {
       cy.get(`:contains(${item.label})`).should("exist");
     });

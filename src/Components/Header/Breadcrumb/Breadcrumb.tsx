@@ -1,4 +1,5 @@
 /// <reference types="vite-plugin-svgr/client" />
+import React from "react";
 import ArrowDown from "../../../assets/arrow-down.svg?react";
 import Divider from "../../../assets/divider.svg?react";
 import Typography from "components/Typography/Typography";
@@ -33,4 +34,4 @@ const Breadcrumb = ({ breadcrumb }: BreadcrumbProps) => (
   </div>
 );
 
-export default Breadcrumb;
+export default React.memo(Breadcrumb);

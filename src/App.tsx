@@ -1,55 +1,41 @@
-/// <reference types="vite-plugin-svgr/client" />
-import SideBar from "components/Sidebar/Sidebar";
-import Header from "components/Header/Header";
-import Button from "components/Button/Button";
+import "./index.css";
 import { useState } from "react";
-import Modal from "components/Modal/Modal";
-import { BreadcrumbItem } from "components/Header/Breadcrumb/Breadcrumb";
-import Plus from "../src/assets/plus.svg?react";
-import Typography from "components/Typography/Typography";
-import { Link, Outlet } from "@tanstack/react-router";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { RouterProvider, createRouter } from "@tanstack/react-router";
+import { routeTree } from "./routeTree.gen";
+import { useAuth } from "./hooks/useAuth.ts";
 
-const breadcrumbs: BreadcrumbItem[] = [
-  { text: "Projects name", isDropdown: true, shouldAddDivider: true },
-  { text: "Application name" },
-];
+export type RouterContext = {
+  isAuthenticated: () => boolean;
+};
 
-interface AppProps {
-  breadcrumbs: BreadcrumbItem[];
+const router = createRouter({
+  routeTree,
+  context: { isAuthenticated: undefined! },
+  defaultPreload: "intent",
+  defaultPreloadStaleTime: 0,
+  // defaultPendingComponent: () => <span>...loading...</span>,
+  defaultErrorComponent: ({ error }) => <div>{`${error}`}</div>,
+  defaultNotFoundComponent: () => <span>is a 404</span>,
+});
+
+declare module "@tanstack/react-router" {
+  interface Register {
+    router: typeof router;
+  }
 }
 
-// https://github.com/pmndrs/zustand
-const App: React.FC<AppProps> = ({ breadcrumbs }) => {
-  const [showModal, setShowModal] = useState(false);
+function App() {
+  const [queryClient] = useState(() => new QueryClient());
+  const { isAuthenticated } = useAuth();
 
   return (
-    <div className="h-screen flex flex-col">
-      <div className="h-17">
-        <Header
-          breadcrumbs={breadcrumbs}
-          user={{ username: "dana israeli", thumbnail: 10 }}
-        />
-      </div>
-
-      <div className="w-full h-full flex">
-        <Outlet />
-      </div>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} context={{ isAuthenticated }} />
+    </QueryClientProvider>
   );
-};
+}
 
 export default App;
 
-//  <Button
-//   variant="link"
-//   onClick={() => alert("Primary Button Clicked!")}
-//   icon={<Plus />}
-//   children="label"
-// />
-
-// {showModal && (
-//   <Modal
-//     setShowModal={setShowModal}
-//     children={<div className="bg-black w-20">hi</div>}
-//   />
-// )}
+// https://github.com/pmndrs/zustand

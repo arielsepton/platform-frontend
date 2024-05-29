@@ -10,25 +10,30 @@ import { ReactNode } from "react";
 export type Item = {
   icon: ReactNode;
   label: string;
-  rotate?: number;
+  path: string;
 };
+
+const basePath: string = "/projects/$projectName";
 
 export const sidebarItems: Item[] = [
   {
     icon: <AppsOverview />,
     label: "Applications",
+    path: `${basePath}/applications`,
   },
   {
     icon: <Members />,
     label: "Members",
+    path: `${basePath}/members`,
   },
   {
     icon: <Secrets />,
     label: "Secrets",
-    rotate: 45,
+    path: `${basePath}/secrets`,
   },
   {
     icon: <Settings />,
     label: "Settings",
+    path: `${basePath}/settings`,
   },
 ];

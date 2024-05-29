@@ -5,9 +5,9 @@ import SidebarItem from "./SidebarItem";
 import "src/index.css";
 
 describe("SidebarItem", () => {
-  const item = { icon: <AppsOverview />, label: "Applications" };
+  const item = { icon: <AppsOverview />, label: "Applications", path: "/" };
   const isSidebarExpanded = true;
-  const selectedOption = null;
+  const selectedOption = true;
 
   beforeEach(() => {
     cy.mount(
@@ -15,7 +15,6 @@ describe("SidebarItem", () => {
         item={item}
         isSidebarExpanded={isSidebarExpanded}
         selectedOption={selectedOption}
-        onOptionSelect={cy.stub()}
       />
     );
   });

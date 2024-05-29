@@ -8,7 +8,7 @@ describe("Header Component", () => {
     { text: "Home", isDropdown: false, shouldAddDivider: false },
     { text: "Dashboard", isDropdown: false, shouldAddDivider: false },
   ];
-  const user = { username: "Israel Israeli", thumbnail: 1 };
+  const user = "Israel Israeli";
 
   it("renders header with breadcrumbs and user info", () => {
     cy.mount(<Header breadcrumbs={breadcrumbs} user={user} />);

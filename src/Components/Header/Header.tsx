@@ -1,39 +1,38 @@
 /// <reference types="vite-plugin-svgr/client" />
-import { ReactNode, Suspense, useEffect, useState } from "react";
+import React, { Suspense, useCallback } from "react";
 import AppIcon from "../../assets/app-icon.svg?react";
 import ArrowDown from "../../assets/arrow-down.svg?react";
 
 import Typography from "components/Typography/Typography";
 import Breadcrumb, { BreadcrumbItem } from "./Breadcrumb/Breadcrumb";
-import { importComponent } from "src/utils/importComponent";
-import { APP_NAME } from "src/common/consts";
-import { redirect, useRouter } from "@tanstack/react-router";
-import { useAuth } from "src/hooks/useAuth";
+import { APP_NAME } from "../../common/consts";
+import { useRouter } from "@tanstack/react-router";
+import { useAuth } from "../../hooks/useAuth";
 import { lazy } from "react";
 
 type HeaderProps = {
   breadcrumbs: BreadcrumbItem[];
-  user: { username: string; thumbnail: number };
+  user: string;
 };
+
+function DynamicLoader(thumbnail: number) {
+  const MarkdownPreview = lazy(
+    () => import(`../../assets/account-thumbnails/color-${thumbnail}.svg?react`)
+  );
+  return (
+    <Suspense fallback={<></>}>
+      <MarkdownPreview />
+    </Suspense>
+  );
+}
+
+// const MarkdownPreview = lazy(
+//   () => import(`../../assets/account-thumbnails/color-1.svg?react`)
+// );
 
 const Header = ({ breadcrumbs, user }: HeaderProps) => {
   const router = useRouter();
-  const { signOut } = useAuth();
-  const [importedThumbnail, setimportedThumbnail] = useState<ReactNode>(null);
-
-  useEffect(() => {
-    const thumbnailIconPath: string = `../assets/account-thumbnails/color-${user.thumbnail}.svg?react`;
-    importComponent(thumbnailIconPath).then((component) => {
-      setimportedThumbnail(component);
-    });
-  }, [user.thumbnail]);
-
-  const MarkdownPreview = lazy(
-    () =>
-      import(
-        `../../assets/account-thumbnails/color-${user.thumbnail}.svg?react`
-      )
-  );
+  const { signOut, thumbnail } = useAuth();
 
   return (
     <div className="w-full text-left bg-mono/basic-16 h-17 items-center justify-between gap-4 flex">
@@ -59,13 +58,12 @@ const Header = ({ breadcrumbs, user }: HeaderProps) => {
       </nav>
       <div className="place-self-end flex items-center h-full pr-5.5">
         <div className="relative flex justify-center items-center">
-          {/* {importedThumbnail} */}
-          <Suspense fallback={<></>}>
+          {/* <Suspense fallback={<></>}>
             <MarkdownPreview />
-          </Suspense>
-
+          </Suspense> */}
+          {DynamicLoader(thumbnail)}
           <div className="text-white absolute inset-0 flex justify-center items-center">
-            {user.username
+            {user
               .toUpperCase()
               .split(" ")
               .map((n) => n[0])}
@@ -82,7 +80,7 @@ const Header = ({ breadcrumbs, user }: HeaderProps) => {
             variant="body-md"
             className="text-mono/basic-4 pl-3 group-hover-white"
           >
-            {user.username}
+            {user}
           </Typography>
           <Typography className="text-mono/basic-4 group-hover-white">
             <ArrowDown />
@@ -92,4 +90,4 @@ const Header = ({ breadcrumbs, user }: HeaderProps) => {
     </div>
   );
 };
-export default Header;
+export default React.memo(Header);

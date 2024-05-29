@@ -69,11 +69,13 @@ const authHandlers: HttpHandler[] = [
     const requestData = await request.json();
     console.log(`POST auth sent , request:  ${JSON.stringify(requestData)}`);
     return HttpResponse.json({
-      isAuthorized: true,
+      token: "bbsssisqsoiqoiiihbcbbbdwwwwwwwnnnwwwnmnsskksks",
     });
-    // return new HttpResponse("Not Authorized", {
-    //   status: 401,
+    // return new HttpResponse(null, {
+    //   status: 404,
+    //   statusText: "Out Of Apples",
     // });
+    // HttpResponse.json({ token: "Not Authorized" }, { status: 401 });
   }),
 ];
 

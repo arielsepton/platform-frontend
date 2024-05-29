@@ -24,7 +24,7 @@ const Login: React.FC = () => {
   } = useForm();
 
   type AuthResponse = {
-    isAuthorized: boolean;
+    token: string;
   };
 
   type AuthBody = {
@@ -42,13 +42,19 @@ const Login: React.FC = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
-      await useAuthenticate.mutateAsync(data as AuthBody);
-      signIn();
-      router.invalidate();
-      throw redirect({
-        to: "/",
-      });
-    } catch (error) {}
+      const response = await useAuthenticate.mutateAsync(data as AuthBody);
+      const token = response?.token; // Get the token from the response
+      if (token) {
+        // storeTokenInLocalStorage(token);
+        signIn();
+        router.invalidate();
+        throw redirect({
+          to: "/",
+        });
+      }
+    } catch (error) {
+      console.log(useAuthenticate);
+    }
   };
 
   return (
@@ -111,10 +117,10 @@ const Login: React.FC = () => {
             <Typography
               variant="body-sm"
               className={`text-velvet/basic-5 mb-1 pt-0.75 h-5 ${
-                useAuthenticate.isError ? "" : "opacity-0"
+                useAuthenticate.error ? "" : "opacity-0"
               }`}
             >
-              An error occurred: {` ${JSON.stringify(useAuthenticate.data)}`}
+              An error occurred: {` ${JSON.stringify(useAuthenticate.error)}`}
             </Typography>
           </div>
         </Modal>

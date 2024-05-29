@@ -1,12 +1,9 @@
-import { Outlet, createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authenticated")({
   beforeLoad: async ({ context }) => {
-    const { isLogged } = context.authentication;
-    if (!isLogged()) {
+    if (!context.isAuthenticated()) {
       throw redirect({ to: "/login" });
     }
-
-    return <Outlet />;
   },
 });

@@ -5,31 +5,29 @@ import { Item } from "../items";
 type SideBarItemProps = {
   item: Item;
   isSidebarExpanded: boolean;
-  selectedOption: string | null;
-  onOptionSelect: (option: string) => void;
+  selectedOption: boolean;
 };
 
 const SidebarItem = ({
   item,
   isSidebarExpanded,
   selectedOption,
-  onOptionSelect,
 }: SideBarItemProps) => {
   return (
     <div
-      onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        e.stopPropagation();
-        onOptionSelect(item.label);
-      }}
+      // TODO: why
+      // onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      //   e.stopPropagation();
+      // }}
       className={`h-11 gap-2 pl-3 mb-1 flex items-center justify-start cursor-pointer rounded-md group ${
-        selectedOption === item.label
+        selectedOption
           ? "bg-mono/basic-16 text-white"
           : "hover:bg-mono/basic-12 bg-transparent text-mono/basic-4"
       } `}
     >
       <Typography
         className={`transition-all duration-300 ${
-          selectedOption === item.label
+          selectedOption
             ? "text-green/basic-6 "
             : "text-mono/basic-4 group-hover:text-mono/basic-1"
         } `}
@@ -40,11 +38,7 @@ const SidebarItem = ({
         variant="headline-xs"
         className={`transition-all duration-300
          ${isSidebarExpanded ? "opacity-1" : "opacity-0"} 
-         ${
-           selectedOption === item.label
-             ? "font-semibold"
-             : "text-base font-normal"
-         } 
+         ${selectedOption ? "font-semibold" : "text-base font-normal"} 
           group-hover:text-mono/basic-1`}
       >
         {item.label}
@@ -53,4 +47,4 @@ const SidebarItem = ({
   );
 };
 
-export default SidebarItem;
+export default React.memo(SidebarItem);

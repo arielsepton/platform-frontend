@@ -1,40 +1,48 @@
-import { useRouterState } from "@tanstack/react-router";
-import { Link, Navigate, useNavigate } from "@tanstack/react-router";
-import { Outlet, createFileRoute } from "@tanstack/react-router";
+import { Outlet, useRouterState } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { BreadcrumbItem } from "components/Header/Breadcrumb/Breadcrumb";
 import Header from "components/Header/Header";
-import App from "src/App";
+import { useState } from "react";
+import { useAuth } from "src/hooks/useAuth";
 
 export const Route = createFileRoute("/_authenticated/projects")({
-  component: Comp,
-});
+  component: () => {
+    const router = useRouterState();
 
-function Comp() {
-  const router = useRouterState();
-  const path = router.location.pathname.split("/").filter((i) => i);
-  console.log(path);
-  const breadcrumbs: BreadcrumbItem[] = [
-    // { text: "Projects name", isDropdown: true, shouldAddDivider: true },
-    // { text: "Application name" },
-  ];
-  // /projects/projectname/application/applicationName
+    const generateBreadcrumbs = (pathname: string): BreadcrumbItem[] => {
+      const breadcrumbs: BreadcrumbItem[] = [];
+      const pathSegments = pathname.split("/").filter((segment) => segment);
 
-  // TODO: make it better
-  if (path.length == 1) {
-    breadcrumbs.push({ text: "Projects overview" });
-  } else {
-    path.map((item, i) => {
-      if (i % 2 != 0) {
-        breadcrumbs.push({
-          text: item,
-          isDropdown: Boolean(i == 1),
-          shouldAddDivider: Boolean(i == 3),
-        });
+      if (pathSegments.length === 1) {
+        return [{ text: "Projects overview" }];
       }
-    });
-  }
 
-  console.log("here", router.location.pathname);
-  console.log("path", path);
-  return <App breadcrumbs={breadcrumbs} />;
-}
+      if (pathSegments.length > 1) {
+        breadcrumbs.push({ text: pathSegments[1], isDropdown: true });
+        if (pathSegments.length > 3) {
+          breadcrumbs.push({ text: pathSegments[3], shouldAddDivider: true });
+        }
+      }
+
+      return breadcrumbs;
+    };
+
+    const [breadcrumbs, _] = useState(
+      generateBreadcrumbs(router.location.pathname)
+    );
+
+    const { username } = useAuth();
+
+    return (
+      <div className="h-screen flex flex-col">
+        <div className="h-17">
+          <Header breadcrumbs={breadcrumbs} user={username} />
+        </div>
+
+        <div className="w-full h-full flex">
+          <Outlet />
+        </div>
+      </div>
+    );
+  },
+});
