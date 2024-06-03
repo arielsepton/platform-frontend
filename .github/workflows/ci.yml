@@ -1,5 +1,13 @@
-name: "build pipeline for web release"
-on: push
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - release-*
+  pull_request: {}
+  workflow_dispatch: {}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,3 +23,14 @@ jobs:
         run: npm install
       - name: Build file
         run: npm run build
+
+  component-tests:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          component: true
+          browser: chrome
