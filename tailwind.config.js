@@ -5,6 +5,15 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     fontSize: {
+      "headline-9xl": [
+        "128px",
+        {
+          font: "Red Hat Display",
+          lineHeight: "1",
+          letterSpacing: "normal",
+          fontWeight: "700",
+        },
+      ],
       "headline-xl": [
         "28px",
         {

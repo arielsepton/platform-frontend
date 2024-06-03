@@ -1,25 +1,21 @@
 import { useLocalStorage } from "usehooks-ts";
 
+// TODO: indexdb
 export const useAuth = () => {
-  const [thumbnail, setThumbnail] = useLocalStorage("thumbnail", 1);
-  const [username, setUsername] = useLocalStorage("username", "Dana Israeli");
+  const [thumbnail, setThumbnail] = useLocalStorage<number>("thumbnail", 1);
+  const [username, setUsername] = useLocalStorage<string>("username", "");
+  const [token, setToken] = useLocalStorage<string>("token", "");
 
-  const signIn = () => {
+  const signIn = (token: string, user: string) => {
+    setToken(token);
+    setUsername(user);
     localStorage.setItem("isAuthenticated", "true");
   };
 
   const signOut = () => {
+    setToken("");
     localStorage.removeItem("isAuthenticated");
   };
-
-  const storeTokenInLocalStorage = (token: string) => {
-    localStorage.setItem("token", token);
-  };
-
-  const getTokenFromLocalStorage = () => {
-    localStorage.getItem("token");
-  };
-  // TODO indexdb
 
   const isAuthenticated = () =>
     localStorage.getItem("isAuthenticated") === "true";
@@ -28,10 +24,9 @@ export const useAuth = () => {
     signIn,
     signOut,
     isAuthenticated,
-    // storeTokenInLocalStorage,
-    // getTokenFromLocalStorage,
     setThumbnail,
     thumbnail,
     username,
+    token,
   };
 };

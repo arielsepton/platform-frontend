@@ -1,5 +1,7 @@
+// TODO: configure routes
+
 export const APP_NAME = "RCS Amplify";
-const API_URL = "https://example.com";
+export const API_URL = "https://example.com";
 
 export const API_ROUTES = {
   SIGN_IN: `${API_URL}/auth/signin`,

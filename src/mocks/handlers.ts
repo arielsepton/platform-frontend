@@ -1,10 +1,11 @@
+import { error } from "console";
 import { http, HttpHandler, HttpResponse } from "msw";
-
-const baseEndpoint: string = "https://example.com";
+import { API_URL } from "src/common/consts";
+// TODO: import from consts
 
 const containersHandlers: HttpHandler[] = [
   http.get(
-    `${baseEndpoint}/:namespace/:capp_name/:pod_name/containers`,
+    `${API_URL}/:namespace/:capp_name/:pod_name/containers`,
     ({ params }) => {
       console.log(`GET containers sent, params: ${params}`);
       return HttpResponse.json({
@@ -16,7 +17,7 @@ const containersHandlers: HttpHandler[] = [
 ];
 
 const secretsHandlers: HttpHandler[] = [
-  http.post(`${baseEndpoint}/:namespace/secrets`, ({ request, params }) => {
+  http.post(`${API_URL}/:namespace/secrets`, ({ request, params }) => {
     console.log(`POST secret sent, params: ${params} , request: ${request}`);
     return HttpResponse.json({
       namespace: "string",
@@ -24,7 +25,7 @@ const secretsHandlers: HttpHandler[] = [
       name: "string",
     });
   }),
-  http.get(`${baseEndpoint}/secrets`, ({ params }) => {
+  http.get(`${API_URL}/secrets`, ({ params }) => {
     console.log(`GET secrets sent, params: ${params}`);
     return HttpResponse.json({
       count: 1,
@@ -37,13 +38,13 @@ const secretsHandlers: HttpHandler[] = [
       ],
     });
   }),
-  http.get(`${baseEndpoint}/todos`, async ({ params }) => {
+  http.get(`${API_URL}/todos`, async ({ params }) => {
     const requestParams = await params;
 
     console.log(`GET todos sent, params: ${JSON.stringify(requestParams)}`);
     return HttpResponse.json([{ id: 1, title: "hi" }]);
   }),
-  http.post(`${baseEndpoint}/todos`, async ({ request }) => {
+  http.post(`${API_URL}/todos`, async ({ request }) => {
     const requestData = await request.json();
     console.log(`POST todos sent , request:  ${JSON.stringify(requestData)}`);
     return HttpResponse.json({
@@ -51,26 +52,28 @@ const secretsHandlers: HttpHandler[] = [
       title: "hi",
     });
   }),
-  http.put(
-    `${baseEndpoint}/:namespace/secrets/:name`,
-    ({ request, params }) => {
-      console.log(`POST secret sent, params: ${params} , request: ${request}`);
-      return HttpResponse.json({
-        namespace: "string",
-        type: "string",
-        name: "string",
-      });
-    }
-  ),
+  http.put(`${API_URL}/:namespace/secrets/:name`, ({ request, params }) => {
+    console.log(`POST secret sent, params: ${params} , request: ${request}`);
+    return HttpResponse.json({
+      namespace: "string",
+      type: "string",
+      name: "string",
+    });
+  }),
 ];
 
 const authHandlers: HttpHandler[] = [
-  http.post(`${baseEndpoint}/auth`, async ({ request }) => {
+  http.post(`${API_URL}/auth`, async ({ request }) => {
     const requestData = await request.json();
     console.log(`POST auth sent , request:  ${JSON.stringify(requestData)}`);
-    return HttpResponse.json({
-      token: "bbsssisqsoiqoiiihbcbbbdwwwwwwwnnnwwwnmnsskksks",
-    });
+    return HttpResponse.json(
+      {
+        user: "Dana Israeli",
+        token: "bbsssisqsoiqoiiihbcbbbdwwwwwwwnnnwwwnmnsskksks",
+        message: "unauthorized user",
+      },
+      { status: 401 }
+    );
     // return new HttpResponse(null, {
     //   status: 404,
     //   statusText: "Out Of Apples",

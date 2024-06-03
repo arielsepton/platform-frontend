@@ -1,21 +1,22 @@
 /// <reference types="vite-plugin-svgr/client" />
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-
 import AppIcon from "../../assets/app-icon.svg?react";
 import Modal from "components/Modal/Modal";
-import React from "react";
+import React, { useState } from "react";
 import Typography from "components/Typography/Typography";
 import Button from "components/Button/Button";
-import { APP_NAME } from "src/common/consts";
+import { APP_NAME } from "../../common/consts";
 import Input from "components/Form/Input/Input";
-import { useFetchMutation } from "src/hooks/useFetchQuery";
-import { redirect } from "@tanstack/react-router";
 import { useRouter } from "@tanstack/react-router";
-import { useAuth } from "src/hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
+import { useDataMutation } from "../../hooks/useDataMutation";
+import { User } from "../../models/user/user";
+import { AuthData } from "../../models/auth/authData";
 
 const Login: React.FC = () => {
   const router = useRouter();
   const { signIn } = useAuth();
+  const [error, setError] = useState<string | null>(null);
 
   const {
     register,
@@ -23,37 +24,23 @@ const Login: React.FC = () => {
     handleSubmit,
   } = useForm();
 
-  type AuthResponse = {
-    token: string;
-  };
-
-  type AuthBody = {
-    username: string;
-    password: string;
-  };
-
-  const useAuthenticate = useFetchMutation<AuthBody, AuthResponse>(
-    "https://example.com/auth",
-    "title",
-    {
-      method: "POST",
-    }
-  );
+  const { mutateInstance: mutate } = useDataMutation<User>("/auth");
+  const { mutateAsync } = mutate.post;
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
-      const response = await useAuthenticate.mutateAsync(data as AuthBody);
-      const token = response?.token; // Get the token from the response
-      if (token) {
-        // storeTokenInLocalStorage(token);
-        signIn();
+      const response: Response = await mutateAsync(data as User);
+      const authData: AuthData = AuthData.parseJson(response);
+      if (authData && authData.token && authData.user) {
+        signIn(authData.token, authData.user);
         router.invalidate();
-        throw redirect({
-          to: "/",
-        });
       }
     } catch (error) {
-      console.log(useAuthenticate);
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("An unknown error occurred");
+      }
     }
   };
 
@@ -116,11 +103,9 @@ const Login: React.FC = () => {
             </div>
             <Typography
               variant="body-sm"
-              className={`text-velvet/basic-5 mb-1 pt-0.75 h-5 ${
-                useAuthenticate.error ? "" : "opacity-0"
-              }`}
+              className={`text-velvet/basic-5 mb-1 pt-0.75 h-5 ${error ? "" : "opacity-0"}`}
             >
-              An error occurred: {` ${JSON.stringify(useAuthenticate.error)}`}
+              {error}
             </Typography>
           </div>
         </Modal>

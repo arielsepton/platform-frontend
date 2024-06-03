@@ -7,9 +7,6 @@ import Container from "components/Container/Container";
 import SideBar from "components/Sidebar/Sidebar";
 
 export const Route = createFileRoute("/_authenticated/projects/$projectName")({
-  beforeLoad: async ({ params }) => {
-    console.log(params.projectName);
-  },
   component: () => {
     const router = useRouterState();
     return (

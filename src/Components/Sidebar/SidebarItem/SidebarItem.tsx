@@ -8,17 +8,13 @@ type SideBarItemProps = {
   selectedOption: boolean;
 };
 
-const SidebarItem = ({
+const SidebarItem: React.FC<SideBarItemProps> = ({
   item,
   isSidebarExpanded,
   selectedOption,
 }: SideBarItemProps) => {
   return (
     <div
-      // TODO: why
-      // onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-      //   e.stopPropagation();
-      // }}
       className={`h-11 gap-2 pl-3 mb-1 flex items-center justify-start cursor-pointer rounded-md group ${
         selectedOption
           ? "bg-mono/basic-16 text-white"

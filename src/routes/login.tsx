@@ -4,7 +4,6 @@ import Login from "src/Pages/Login/Login";
 
 export const Route = createFileRoute("/login")({
   beforeLoad: async ({ context }) => {
-    console.log(context);
     if (context.isAuthenticated()) {
       throw redirect({ to: "/" });
     }

@@ -1,6 +1,7 @@
 import { TypographyVariants } from "./Typography";
 
 export const variantStyles: { [key in TypographyVariants]: string } = {
+  "headline-9xl": "text-headline-9xl",
   "headline-xl": "text-headline-xl",
   "headline-lg": "text-headline-lg",
   "headline-md": "text-headline-md",

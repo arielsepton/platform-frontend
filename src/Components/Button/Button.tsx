@@ -31,7 +31,7 @@ const Button: React.FC<ButtonProps> = ({
   disabled,
   icon,
   iconPosition = "left",
-}) => {
+}: ButtonProps) => {
   const variantStyle: string = buttonVariantStyles[variant];
   const sizeStyle: string = sizeStyles[size];
   const typographyVariant: TypographyVariants =

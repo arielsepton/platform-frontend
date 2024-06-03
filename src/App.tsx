@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
 import { useAuth } from "./hooks/useAuth.ts";
+import NotFound from "./Pages/NotFound/NotFound.tsx";
 
 export type RouterContext = {
   isAuthenticated: () => boolean;
@@ -14,9 +15,8 @@ const router = createRouter({
   context: { isAuthenticated: undefined! },
   defaultPreload: "intent",
   defaultPreloadStaleTime: 0,
-  // defaultPendingComponent: () => <span>...loading...</span>,
   defaultErrorComponent: ({ error }) => <div>{`${error}`}</div>,
-  defaultNotFoundComponent: () => <span>is a 404</span>,
+  defaultNotFoundComponent: () => <NotFound />,
 });
 
 declare module "@tanstack/react-router" {
@@ -37,5 +37,3 @@ function App() {
 }
 
 export default App;
-
-// https://github.com/pmndrs/zustand

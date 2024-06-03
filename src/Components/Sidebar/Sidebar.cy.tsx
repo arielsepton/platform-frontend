@@ -1,15 +1,18 @@
 import SideBar from "./Sidebar";
 import { sidebarItems } from "./items";
 import "src/index.css";
+import { TestRouter } from "../../TestRouter.js";
 
 describe("SideBar component", () => {
-  // beforeEach(() => {
-  //   cy.mount(<SideBar currentPath="/projects/mytestproject/members" />);
-  // });
+  beforeEach(() => {
+    cy.mount(
+      <TestRouter>
+        <SideBar currentPath="/projects/myproject" />{" "}
+      </TestRouter>
+    );
+  });
 
   it("renders sidebar items correctly", () => {
-    cy.mount(<SideBar currentPath="" />);
-
     sidebarItems.forEach((item) => {
       cy.get(`:contains(${item.label})`).should("exist");
     });
@@ -28,7 +31,7 @@ describe("SideBar component", () => {
       const paddingTop = (height - innerHeight) / 2;
 
       // Click on the padding area
-      cy.get(".flex-none").click(paddingLeft, paddingTop);
+      cy.get(".flex-none").dblclick(paddingLeft, paddingTop);
     });
 
     cy.get("div.w-18").should("exist");
@@ -42,7 +45,7 @@ describe("SideBar component", () => {
       const paddingLeft = (width - innerWidth) / 2;
       const paddingTop = (height - innerHeight) / 2;
 
-      cy.get(".flex-none").click(paddingLeft, paddingTop);
+      cy.get(".flex-none").dblclick(paddingLeft, paddingTop);
     });
 
     cy.get("div.w-65").should("exist");

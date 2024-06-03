@@ -1,11 +1,11 @@
-import { Outlet, useRouterState } from "@tanstack/react-router";
+import { AnyRoute, Outlet, useRouterState } from "@tanstack/react-router";
 import { createFileRoute } from "@tanstack/react-router";
 import { BreadcrumbItem } from "components/Header/Breadcrumb/Breadcrumb";
 import Header from "components/Header/Header";
 import { useState } from "react";
 import { useAuth } from "src/hooks/useAuth";
 
-export const Route = createFileRoute("/_authenticated/projects")({
+export const Route: AnyRoute = createFileRoute("/_authenticated/projects")({
   component: () => {
     const router = useRouterState();
 
@@ -31,6 +31,7 @@ export const Route = createFileRoute("/_authenticated/projects")({
       generateBreadcrumbs(router.location.pathname)
     );
 
+    // TODO: where should i put this?
     const { username } = useAuth();
 
     return (

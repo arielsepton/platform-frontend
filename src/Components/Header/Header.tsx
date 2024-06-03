@@ -1,5 +1,5 @@
 /// <reference types="vite-plugin-svgr/client" />
-import React, { Suspense, useCallback } from "react";
+import React, { Suspense } from "react";
 import AppIcon from "../../assets/app-icon.svg?react";
 import ArrowDown from "../../assets/arrow-down.svg?react";
 
@@ -26,10 +26,6 @@ function DynamicLoader(thumbnail: number) {
   );
 }
 
-// const MarkdownPreview = lazy(
-//   () => import(`../../assets/account-thumbnails/color-1.svg?react`)
-// );
-
 const Header = ({ breadcrumbs, user }: HeaderProps) => {
   const router = useRouter();
   const { signOut, thumbnail } = useAuth();
@@ -49,6 +45,7 @@ const Header = ({ breadcrumbs, user }: HeaderProps) => {
           </Typography>
           <div className="flex cursor-pointer items-center antialiased transition-colors duration-100 bg-mono/basic-14 rounded-full h-fit">
             <div className="flex items-center py-2.25 pl-4 pr-5">
+              {/* TODO: is that ok? */}
               {breadcrumbs.map((breadcrumb) => (
                 <Breadcrumb breadcrumb={breadcrumb} key={breadcrumb.text} />
               ))}
@@ -58,9 +55,6 @@ const Header = ({ breadcrumbs, user }: HeaderProps) => {
       </nav>
       <div className="place-self-end flex items-center h-full pr-5.5">
         <div className="relative flex justify-center items-center">
-          {/* <Suspense fallback={<></>}>
-            <MarkdownPreview />
-          </Suspense> */}
           {DynamicLoader(thumbnail)}
           <div className="text-white absolute inset-0 flex justify-center items-center">
             {user
