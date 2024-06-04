@@ -1,19 +1,28 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "./useAuth";
 import { API_URL } from "src/common/consts";
+import { FetchResponse } from "src/models/response/response";
 
 type body = string | null | undefined;
 export interface FetchInstance {
-  get: (url: string, headers?: HeadersInit) => Promise<Response>;
-  post: (url: string, body: body, headers?: HeadersInit) => Promise<Response>;
-  put: (url: string, body: body, headers?: HeadersInit) => Promise<Response>;
-  delete: (url: string, headers?: HeadersInit) => Promise<Response>;
+  get: (url: string, headers?: HeadersInit) => Promise<FetchResponse>;
+  post: (
+    url: string,
+    body: body,
+    headers?: HeadersInit
+  ) => Promise<FetchResponse>;
+  put: (
+    url: string,
+    body: body,
+    headers?: HeadersInit
+  ) => Promise<FetchResponse>;
+  delete: (url: string, headers?: HeadersInit) => Promise<FetchResponse>;
 }
 
 const fetchHandler = async (
   url: string,
   options: RequestInit
-): Promise<Response> => {
+): Promise<FetchResponse> => {
   const response = await fetch(url, options);
   const data = await response.json();
 
@@ -23,7 +32,8 @@ const fetchHandler = async (
     }
     throw new Error("Unknown error occurred");
   }
-  return response;
+
+  return new FetchResponse(response, data);
 };
 
 const fetchInstance: FetchInstance = {

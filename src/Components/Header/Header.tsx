@@ -84,4 +84,5 @@ const Header = ({ breadcrumbs, user }: HeaderProps) => {
     </div>
   );
 };
+
 export default React.memo(Header);

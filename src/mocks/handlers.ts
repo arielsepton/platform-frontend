@@ -69,14 +69,9 @@ const authHandlers: HttpHandler[] = [
         user: "Dana Israeli",
         token: "bbsssisqsoiqoiiihbcbbbdwwwwwwwnnnwwwnmnsskksks",
         message: "unauthorized user",
-      },
-      { status: 401 }
+      }
+      // { status: 401 }
     );
-    // return new HttpResponse(null, {
-    //   status: 404,
-    //   statusText: "Out Of Apples",
-    // });
-    // HttpResponse.json({ token: "Not Authorized" }, { status: 401 });
   }),
 ];
 

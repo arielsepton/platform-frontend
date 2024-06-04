@@ -4,19 +4,19 @@ export class AuthData {
     public user: string
   ) {}
 
-  public static parseJson(data: any): AuthData {
-    const user: AuthData = new AuthData(data.username, data.password);
-    return user;
-  }
-
-  public toJSON(): Object {
+  public toJSON(): object {
     return {
       user: this.user,
       token: this.token,
     };
   }
 
+  public static fromJson(json: { token: string; user: string }): AuthData {
+    const user: AuthData = new AuthData(json.token, json.user);
+    return user;
+  }
+
   public static clone(user: AuthData): AuthData {
-    return new AuthData(user.user, user.token);
+    return new AuthData(user.token, user.user);
   }
 }

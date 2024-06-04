@@ -8,10 +8,12 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "test": "vitest",
+    "reviewable": "npm run build && npm run lint && npm run cy:run",
     "cy:open": "cypress open --component --browser chrome --config-file ./cypress.config.ts",
     "cy:run": "cypress run --component --browser chrome --config-file ./cypress.config.ts",
-    "coverage": "vitest run --coverage"
+    "prettier": "prettier .",
+    "format": "npm run prettier -- --write"
+
   },
   "dependencies": {
     "@fontsource-variable/red-hat-text": "^5.0.19",

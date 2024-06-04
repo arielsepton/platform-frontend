@@ -28,7 +28,7 @@ const Modal: React.FC<ModalProps> = ({
     return () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
-  }, []);
+  }, [closeOnEscape]);
 
   return ReactDOM.createPortal(
     <div className="fixed inset-0 flex items-center justify-center">

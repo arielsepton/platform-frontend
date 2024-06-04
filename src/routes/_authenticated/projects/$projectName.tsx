@@ -1,21 +1,6 @@
-import {
-  Outlet,
-  createFileRoute,
-  useRouterState,
-} from "@tanstack/react-router";
-import Container from "components/Container/Container";
-import SideBar from "components/Sidebar/Sidebar";
+import { createFileRoute } from "@tanstack/react-router";
+import Project from "../../../Pages/Projects/Project/Project";
 
 export const Route = createFileRoute("/_authenticated/projects/$projectName")({
-  component: () => {
-    const router = useRouterState();
-    return (
-      <>
-        <SideBar currentPath={router.location.pathname} />
-        <Container>
-          <Outlet />
-        </Container>
-      </>
-    );
-  },
+  component: Project,
 });

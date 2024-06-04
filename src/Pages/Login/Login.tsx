@@ -24,24 +24,24 @@ const Login: React.FC = () => {
     handleSubmit,
   } = useForm();
 
-  const { mutateInstance: mutate } = useDataMutation<User>("/auth");
-  const { mutateAsync } = mutate.post;
-
-  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    try {
-      const response: Response = await mutateAsync(data as User);
-      const authData: AuthData = AuthData.parseJson(response);
-      if (authData && authData.token && authData.user) {
-        signIn(authData.token, authData.user);
+  const { mutateInstance: mutate } = useDataMutation<User>("/auth", undefined, {
+    onSuccess: async (response, user) => {
+      const authData: AuthData = AuthData.fromJson(
+        response.body as { token: string; user: string }
+      );
+      if (authData && authData.token) {
+        signIn(authData.token, user.username);
         router.invalidate();
       }
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      } else {
-        setError("An unknown error occurred");
-      }
-    }
+    },
+    onError: (error) => setError(error.message),
+  });
+
+  const onSubmit: SubmitHandler<FieldValues> = async ({
+    username,
+    password,
+  }) => {
+    await mutate.post.mutateAsync(User.fromJson({ username, password }));
   };
 
   return (
@@ -95,9 +95,10 @@ const Login: React.FC = () => {
                   <Button
                     variant="primary"
                     onClick={handleSubmit(onSubmit)}
-                    children="Login"
                     className="w-[140px]"
-                  />
+                  >
+                    Login
+                  </Button>
                 </div>
               </form>
             </div>

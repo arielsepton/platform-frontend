@@ -51,7 +51,7 @@ const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
           [type]: !prevState[type],
         }));
       },
-      [inputState]
+      []
     );
 
     return (
