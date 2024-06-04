@@ -26,6 +26,11 @@ function DynamicLoader(thumbnail: number) {
   );
 }
 
+function getFirstLetter(input: string): string  {
+  const match = input.match(/\d+([a-zA-Z])/);
+  return match ? match[1] : "";
+}
+
 const Header = ({ breadcrumbs, user }: HeaderProps) => {
   const router = useRouter();
   const { signOut, thumbnail } = useAuth();
@@ -57,10 +62,7 @@ const Header = ({ breadcrumbs, user }: HeaderProps) => {
         <div className="relative flex justify-center items-center">
           {DynamicLoader(thumbnail)}
           <div className="text-white absolute inset-0 flex justify-center items-center">
-            {user
-              .toUpperCase()
-              .split(" ")
-              .map((n) => n[0])}
+            {getFirstLetter(user).toUpperCase()}
           </div>
         </div>
         <div

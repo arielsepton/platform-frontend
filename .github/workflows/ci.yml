@@ -32,7 +32,10 @@ jobs:
           node-version: "16"
           cache: "npm"
       - name: lint
-        run: npm run lint
+        run: |
+          npm install
+          npm run lint
+          npm run tidy
   component-tests:
     runs-on: ubuntu-22.04
     steps:
