@@ -8,7 +8,7 @@ describe("SideBar component", () => {
     cy.mount(
       <TestRouter>
         <SideBar currentPath="/projects/myproject" />{" "}
-      </TestRouter>
+      </TestRouter>,
     );
   });
 

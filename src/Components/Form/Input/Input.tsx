@@ -25,7 +25,7 @@ interface InputState {
 const typeToToggleMap: { [key: string]: ToggleComponent } = {
   password: (
     inputState: InputState,
-    toggleShowPassword: (type: string) => void
+    toggleShowPassword: (type: string) => void,
   ) => (
     <div
       className="absolute top-0 right-0 h-full flex items-center pr-3 cursor-pointer"
@@ -44,15 +44,12 @@ const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
   ({ type, placeholder, error, label, className, ...props }, ref) => {
     const [inputState, setInputState] = useState<InputState>({});
 
-    const updateToggleState = useCallback(
-      (type: string) => {
-        setInputState((prevState) => ({
-          ...prevState,
-          [type]: !prevState[type],
-        }));
-      },
-      []
-    );
+    const updateToggleState = useCallback((type: string) => {
+      setInputState((prevState) => ({
+        ...prevState,
+        [type]: !prevState[type],
+      }));
+    }, []);
 
     return (
       <div className={`flex flex-col ${className || ""}`}>
@@ -85,7 +82,7 @@ const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
         </Typography>
       </div>
     );
-  }
+  },
 );
 
 export default Input;

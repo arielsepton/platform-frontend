@@ -28,21 +28,18 @@ interface TypographyProps {
   className?: string;
 }
 
-const Typography: React.FC<TypographyProps> = React.memo(({
-  as: Tag = "p",
-  variant,
-  children,
-  className,
-}) => {
-  return (
-    <Tag
-      className={`${className ? className : ""} ${
-        variant ? variantStyles[variant] : ""
-      }`}
-    >
-      {children}
-    </Tag>
-  );
-});
+const Typography: React.FC<TypographyProps> = React.memo(
+  ({ as: Tag = "p", variant, children, className }) => {
+    return (
+      <Tag
+        className={`${className ? className : ""} ${
+          variant ? variantStyles[variant] : ""
+        }`}
+      >
+        {children}
+      </Tag>
+    );
+  },
+);
 
 export default Typography;

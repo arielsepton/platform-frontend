@@ -27,7 +27,7 @@ const Login: React.FC = () => {
   const { mutateInstance: mutate } = useDataMutation<User>("/auth", undefined, {
     onSuccess: async (response, user) => {
       const authData: AuthData = AuthData.fromJson(
-        response.body as { token: string; user: string }
+        response.body as { token: string; user: string },
       );
       if (authData && authData.token) {
         signIn(authData.token, user.username);

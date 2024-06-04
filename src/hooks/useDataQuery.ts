@@ -5,7 +5,7 @@ import { FetchResponse } from "src/models/response/response";
 export function useDataQuery(
   queryKey: string | string[],
   url: string,
-  headers?: HeadersInit
+  headers?: HeadersInit,
 ): UseQueryResult<FetchResponse> {
   const { fetchInstance } = useFetch();
 

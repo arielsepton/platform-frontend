@@ -1,7 +1,7 @@
 export class AuthData {
   constructor(
     public token: string,
-    public user: string
+    public user: string,
   ) {}
 
   public toJSON(): object {
