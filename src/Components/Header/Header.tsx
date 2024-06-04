@@ -31,7 +31,7 @@ function getFirstLetter(input: string): string  {
   return match ? match[1] : "";
 }
 
-const Header = ({ breadcrumbs, user }: HeaderProps) => {
+const Header = React.memo(({ breadcrumbs, user }: HeaderProps) => {
   const router = useRouter();
   const { signOut, thumbnail } = useAuth();
 
@@ -85,6 +85,6 @@ const Header = ({ breadcrumbs, user }: HeaderProps) => {
       </div>
     </div>
   );
-};
+});
 
-export default React.memo(Header);
+export default Header;

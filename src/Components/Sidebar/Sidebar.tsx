@@ -8,7 +8,7 @@ export type SidebarProps = {
   currentPath: string;
 };
 
-const Sidebar: React.FC<SidebarProps> = ({ currentPath }: SidebarProps) => {
+const Sidebar: React.FC<SidebarProps> = React.memo(({ currentPath }: SidebarProps) => {
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
 
   const toggleSidebar = useCallback(() => {
@@ -35,6 +35,6 @@ const Sidebar: React.FC<SidebarProps> = ({ currentPath }: SidebarProps) => {
       </div>
     </div>
   );
-};
+});
 
-export default React.memo(Sidebar);
+export default Sidebar;

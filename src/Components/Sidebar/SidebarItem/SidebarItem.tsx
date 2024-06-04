@@ -8,7 +8,7 @@ type SideBarItemProps = {
   selectedOption: boolean;
 };
 
-const SidebarItem: React.FC<SideBarItemProps> = ({
+const SidebarItem: React.FC<SideBarItemProps> = React.memo(({
   item,
   isSidebarExpanded,
   selectedOption,
@@ -41,6 +41,6 @@ const SidebarItem: React.FC<SideBarItemProps> = ({
       </Typography>
     </div>
   );
-};
+});
 
-export default React.memo(SidebarItem);
+export default SidebarItem;

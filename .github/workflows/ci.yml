@@ -34,7 +34,7 @@ jobs:
       - name: lint
         run: |
           npm install
-          npm run lint
+          npm run lint:ci
           npm run tidy
   component-tests:
     runs-on: ubuntu-22.04

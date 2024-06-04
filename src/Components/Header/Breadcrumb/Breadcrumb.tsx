@@ -14,7 +14,7 @@ export type BreadcrumbItem = {
   shouldAddDivider?: boolean;
 };
 
-const Breadcrumb = ({ breadcrumb }: BreadcrumbProps) => (
+const Breadcrumb = React.memo(({ breadcrumb }: BreadcrumbProps) => (
   <div className="flex items-center text-mono/basic-4">
     {breadcrumb.shouldAddDivider && (
       <Typography className=" px-4">
@@ -32,6 +32,6 @@ const Breadcrumb = ({ breadcrumb }: BreadcrumbProps) => (
       )}
     </div>
   </div>
-);
+));
 
-export default React.memo(Breadcrumb);
+export default Breadcrumb;

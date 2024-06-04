@@ -4,10 +4,10 @@ Please include a summary of the changes and the related issue. Please also inclu
 
 ## Checklist before requesting a review
 
-Please delete options that are not relevant.
+I have:
 
-- [ ] I have performed a self-review of my code
-- [ ] I have commented hard-to-understand areas
-- [ ] I have ideally added tests that prove my fix is effective or that my feature works
-- [ ] New and existing unit tests pass locally with my changes
+- [ ] Performed a self-review of my code
+- [ ] Commented hard-to-understand areas
+- [ ] Ideally added tests that prove my fix is effective or that my feature works
+- [ ] Run `npm run reviewable` to ensure this PR is ready for review.
 - [ ] Any dependent changes have been merged

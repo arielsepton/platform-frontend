@@ -28,7 +28,7 @@ interface TypographyProps {
   className?: string;
 }
 
-const Typography: React.FC<TypographyProps> = ({
+const Typography: React.FC<TypographyProps> = React.memo(({
   as: Tag = "p",
   variant,
   children,
@@ -43,6 +43,6 @@ const Typography: React.FC<TypographyProps> = ({
       {children}
     </Tag>
   );
-};
+});
 
-export default React.memo(Typography);
+export default Typography;
