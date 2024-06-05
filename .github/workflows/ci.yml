@@ -21,10 +21,8 @@ jobs:
           cache-dependency-path: package-lock.json
       - name: Install dependencies
         run: npm install
-      - name: tsc
-        run: tsc
       - name: Build file
-        run: vite
+        run: npm run build
   lint:
     runs-on: ubuntu-latest
     steps:
