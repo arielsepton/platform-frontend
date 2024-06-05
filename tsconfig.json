@@ -2,15 +2,15 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@*": ["./src/*"],
-      "@assets/*": ["./src/assets/*"],
-      "@components/*": ["./src/components/*"],
-      "@config/*": ["./src/config/*"],
-      "@hooks/*": ["./src/hooks/*"],
-      "@common/*": ["./src/common/*"],
-      "@pages/*": ["./src/pages/*"],
-      "@utils/*": ["./src/utils/*"],
-      "@models/*": ["./src/models/*"]
+      "@*": ["./*"],
+      "@assets/*": ["./assets/*"],
+      "@components/*": ["./components/*"],
+      "@config/*": ["./config/*"],
+      "@hooks/*": ["./hooks/*"],
+      "@common/*": ["./common/*"],
+      "@pages/*": ["./pages/*"],
+      "@utils/*": ["./utils/*"],
+      "@models/*": ["./models/*"]
     },
     "types": ["cypress", "node"],
     "target": "ES2020",
