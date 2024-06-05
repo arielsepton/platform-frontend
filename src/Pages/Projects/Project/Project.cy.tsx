@@ -1,13 +1,13 @@
-import "@/index.css";
+import "@index.css";
 import Project from "./Project";
-import { TestRouter } from "@/TestRouter.js";
+import { TestRouter } from "@TestRouter.js";
 
 describe("Project Component", () => {
   beforeEach(() => {
     cy.mount(
       <TestRouter>
         <Project />
-      </TestRouter>,
+      </TestRouter>
     );
   });
 
@@ -17,7 +17,7 @@ describe("Project Component", () => {
 
   it("renders the Container component", () => {
     cy.get(
-      "div.grow.h-full.min-w-0.bg-cover.bg-no-repeat.bg-login-pattern",
+      "div.grow.h-full.min-w-0.bg-cover.bg-no-repeat.bg-login-pattern"
     ).should("exist");
   });
 });

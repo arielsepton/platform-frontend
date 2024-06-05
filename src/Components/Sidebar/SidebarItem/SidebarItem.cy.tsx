@@ -1,6 +1,6 @@
 /// <reference types="vite-plugin-svgr/client" />
-import "@/index.css";
-import AppsOverview from "@/assets/apps_overview.svg?react";
+import "@index.css";
+import AppsOverview from "@assets/apps_overview.svg?react";
 import SidebarItem from "./SidebarItem";
 
 describe("SidebarItem", () => {
@@ -14,7 +14,7 @@ describe("SidebarItem", () => {
         item={item}
         isSidebarExpanded={isSidebarExpanded}
         selectedOption={selectedOption}
-      />,
+      />
     );
   });
 

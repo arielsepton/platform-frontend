@@ -1,4 +1,4 @@
-import "@/index.css";
+import "@index.css";
 import Container from "./Container";
 
 describe("Container Component", () => {
@@ -6,7 +6,7 @@ describe("Container Component", () => {
     cy.mount(<Container />);
 
     cy.get(
-      "div.grow.h-full.min-w-0.bg-cover.bg-no-repeat.bg-login-pattern",
+      "div.grow.h-full.min-w-0.bg-cover.bg-no-repeat.bg-login-pattern"
     ).should("exist");
     cy.get("div.bg-opacity-90").should("exist");
     cy.get("div.flex").should("exist");
@@ -16,7 +16,7 @@ describe("Container Component", () => {
     cy.mount(
       <Container>
         <p data-testid="child">Test Child</p>
-      </Container>,
+      </Container>
     );
 
     cy.get('[data-testid="child"]')

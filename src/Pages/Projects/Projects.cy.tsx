@@ -1,14 +1,14 @@
-import "@/index.css";
+import "@index.css";
 import Projects from "./Projects";
-import { TestRouter } from "@/TestRouter.js";
-import { APP_NAME } from "@/common/consts";
+import { TestRouter } from "@TestRouter.js";
+import { APP_NAME } from "@common/consts";
 
 describe("Projects Component", () => {
   beforeEach(() => {
     cy.mount(
       <TestRouter>
         <Projects />
-      </TestRouter>,
+      </TestRouter>
     );
   });
 

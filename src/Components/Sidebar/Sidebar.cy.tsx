@@ -1,14 +1,14 @@
-import "@/index.css";
+import "@index.css";
 import SideBar from "./Sidebar";
 import { sidebarItems } from "./items";
-import { TestRouter } from "@/TestRouter.js";
+import { TestRouter } from "@TestRouter.js";
 
 describe("SideBar component", () => {
   beforeEach(() => {
     cy.mount(
       <TestRouter>
         <SideBar currentPath="/projects/myproject" />{" "}
-      </TestRouter>,
+      </TestRouter>
     );
   });
 

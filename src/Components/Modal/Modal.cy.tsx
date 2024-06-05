@@ -1,4 +1,4 @@
-import "@/index.css";
+import "@index.css";
 import Modal from "./Modal";
 
 describe("Modal Component", () => {
@@ -14,7 +14,7 @@ describe("Modal Component", () => {
     cy.mount(
       <Modal setShowModal={closeModalMock} closeOnEscape>
         {childText}
-      </Modal>,
+      </Modal>
     );
     cy.get("@closeModal").should("not.have.been.called");
     cy.get("body").trigger("keydown", { key: "Escape" });
@@ -27,7 +27,7 @@ describe("Modal Component", () => {
     cy.mount(
       <Modal setShowModal={closeModalMock} closeOnEscape={false}>
         {childText}
-      </Modal>,
+      </Modal>
     );
     cy.get("@closeModal").should("not.have.been.called");
     cy.get("body").trigger("keydown", { key: "Escape" });

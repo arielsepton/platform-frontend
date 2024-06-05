@@ -1,6 +1,6 @@
-import Modal from "@/components/modal/Modal";
+import Modal from "@components/modal/Modal";
 import React from "react";
-import Typography from "@/components/typography/Typography";
+import Typography from "@components/typography/Typography";
 
 const NotFound: React.FC = () => {
   return (

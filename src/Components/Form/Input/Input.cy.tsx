@@ -1,4 +1,4 @@
-import "@/index.css";
+import "@index.css";
 import Input from "./Input";
 
 describe("Input Component", () => {
@@ -24,7 +24,7 @@ describe("Input Component", () => {
           required: "username is required",
         })}
         placeholder="Enter text"
-      />,
+      />
     );
 
     cy.get("@register").should("have.been.calledWith", "username", {
@@ -57,7 +57,7 @@ describe("Input Component", () => {
 
   it("applies custom className", () => {
     cy.mount(
-      <Input type="text" placeholder="Enter text" className="custom-class" />,
+      <Input type="text" placeholder="Enter text" className="custom-class" />
     );
     cy.get("div").should("have.class", "custom-class");
   });

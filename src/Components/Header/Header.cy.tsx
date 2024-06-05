@@ -1,7 +1,7 @@
-import "@/index.css";
+import "@index.css";
 import { BreadcrumbItem } from "./breadcrumb/Breadcrumb";
 import Header from "./Header";
-import { APP_NAME } from "@/common/consts";
+import { APP_NAME } from "@common/consts";
 
 const breadcrumbs: BreadcrumbItem[] = [
   { text: "Home", isDropdown: false, shouldAddDivider: false },

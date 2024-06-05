@@ -1,5 +1,5 @@
 import React from "react";
-import Typography from "@/components/typography/Typography";
+import Typography from "@components/typography/Typography";
 import { Item } from "../items";
 
 type SideBarItemProps = {
@@ -38,7 +38,7 @@ const SidebarItem: React.FC<SideBarItemProps> = React.memo(
         </Typography>
       </div>
     );
-  },
+  }
 );
 
 export default SidebarItem;

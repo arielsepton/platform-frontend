@@ -1,9 +1,9 @@
 /// <reference types="vite-plugin-svgr/client" />
 
-import AppsOverview from "@/assets/apps_overview.svg?react";
-import Members from "@/assets/members.svg?react";
-import Settings from "@/assets/settings.svg?react";
-import Secrets from "@/assets/secrets.svg?react";
+import AppsOverview from "@assets/apps_overview.svg?react";
+import Members from "@assets/members.svg?react";
+import Settings from "@assets/settings.svg?react";
+import Secrets from "@assets/secrets.svg?react";
 
 import { ReactNode } from "react";
 

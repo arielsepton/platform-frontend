@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "./useAuth";
-import { API_URL } from "@/common/consts";
-import { FetchResponse } from "@/models/response/response";
+import { API_URL } from "@common/consts";
+import { FetchResponse } from "@models/response/response";
 
 type body = string | null | undefined;
 export interface FetchInstance {
@@ -9,19 +9,19 @@ export interface FetchInstance {
   post: (
     url: string,
     body: body,
-    headers?: HeadersInit,
+    headers?: HeadersInit
   ) => Promise<FetchResponse>;
   put: (
     url: string,
     body: body,
-    headers?: HeadersInit,
+    headers?: HeadersInit
   ) => Promise<FetchResponse>;
   delete: (url: string, headers?: HeadersInit) => Promise<FetchResponse>;
 }
 
 const fetchHandler = async (
   url: string,
-  options: RequestInit,
+  options: RequestInit
 ): Promise<FetchResponse> => {
   const response = await fetch(url, options);
   const data = await response.json();

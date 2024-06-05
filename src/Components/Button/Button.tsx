@@ -9,7 +9,7 @@ import {
 } from "./buttonStyles";
 import Typography, {
   TypographyVariants,
-} from "@/components/typography/Typography";
+} from "@components/typography/Typography";
 
 interface ButtonProps {
   variant: ButtonVariants;

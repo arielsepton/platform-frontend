@@ -4,8 +4,8 @@ import {
   UseMutationResult,
 } from "@tanstack/react-query";
 import { useState } from "react";
-import { useFetch } from "@/hooks/useFetch";
-import { FetchResponse } from "@/models/response/response";
+import { useFetch } from "@hooks/useFetch";
+import { FetchResponse } from "@models/response/response";
 
 export interface MutateInstance<T> {
   post: UseMutationResult<FetchResponse, Error, T>;
@@ -16,7 +16,7 @@ export interface MutateInstance<T> {
 export function useDataMutation<T>(
   url: string,
   headers?: HeadersInit,
-  options?: UseMutationOptions<FetchResponse, Error, T>,
+  options?: UseMutationOptions<FetchResponse, Error, T>
 ): {
   mutateInstance: MutateInstance<T>;
 } {
