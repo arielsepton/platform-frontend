@@ -6,8 +6,8 @@ Please include a summary of the changes and the related issue. Please also inclu
 
 I have:
 
-- [ ] Performed a self-review of my code
-- [ ] Commented hard-to-understand areas
-- [ ] Ideally added tests that prove my fix is effective or that my feature works
-- [ ] Run `npm run reviewable` to ensure this PR is ready for review.
-- [ ] Any dependent changes have been merged
+- [ ] Performed a self-review of my code.
+- [ ] Commented hard-to-understand areas.
+- [ ] Ideally added tests that prove my fix is effective or that my feature works.
+- [ ] Ran `npm run reviewable` to ensure this PR is ready for review.
+- [ ] Made sure any dependent changes have been merged.
