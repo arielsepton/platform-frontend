@@ -1,15 +1,8 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
-      "@/assets/*": ["./assets/*"],
-      "@/components/*": ["./components/*"],
-      "@/config/*": ["./config/*"],
-      "@/hooks/*": ["./hooks/*"],
-      "@/common/*": ["./common/*"],
-      "@/pages/*": ["./pages/*"],
-      "@/utils/*": ["./utils/*"]
+      "@/*": ["src/*"]
     },
     "types": ["cypress", "node"],
     "target": "ES2020",
