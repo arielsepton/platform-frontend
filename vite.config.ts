@@ -7,8 +7,6 @@ import tsconfigPaths from "vite-tsconfig-paths";
 export default defineConfig({
   plugins: [react(), svgr(), TanStackRouterVite(), tsconfigPaths()],
   resolve: {
-    alias: {
-      src: "/src",
-    },
+    alias: [{ find: "@", replacement: "/src" }],
   },
 });
