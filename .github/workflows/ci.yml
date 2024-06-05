@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js 20.x
@@ -22,7 +22,7 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: tsc
-        run: npx tsc
+        run: tsc
       - name: Build file
         run: vite
   lint:
