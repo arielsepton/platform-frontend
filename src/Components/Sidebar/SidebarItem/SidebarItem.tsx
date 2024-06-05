@@ -1,5 +1,5 @@
 import React from "react";
-import Typography from "components/Typography/Typography";
+import Typography from "@/components/typography/Typography";
 import { Item } from "../items";
 
 type SideBarItemProps = {

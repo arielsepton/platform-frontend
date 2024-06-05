@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "./useAuth";
-import { API_URL } from "src/common/consts";
-import { FetchResponse } from "src/models/response/response";
+import { API_URL } from "@/common/consts";
+import { FetchResponse } from "@/models/response/response";
 
 type body = string | null | undefined;
 export interface FetchInstance {

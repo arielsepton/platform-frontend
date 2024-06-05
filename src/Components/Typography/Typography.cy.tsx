@@ -1,5 +1,5 @@
+import "@/index.css";
 import Typography, { TypographyVariants, TypographyTags } from "./Typography";
-import "src/index.css";
 
 describe("Typography component", () => {
   const typographyOptions: TypographyVariants[] = [

@@ -1,6 +1,6 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { useFetch } from "./useFetch";
-import { FetchResponse } from "src/models/response/response";
+import { FetchResponse } from "@/models/response/response";
 
 export function useDataQuery(
   queryKey: string | string[],

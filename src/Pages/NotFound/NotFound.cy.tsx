@@ -1,4 +1,4 @@
-import "src/index.css";
+import "@/index.css";
 import NotFound from "./NotFound";
 
 describe("NotFound Component", () => {

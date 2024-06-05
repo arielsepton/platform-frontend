@@ -1,6 +1,6 @@
 import React from "react";
 import { ReactNode } from "react";
-import { variantStyles } from "./VariantStyles";
+import { variantStyles } from "./variantStyles";
 
 export type TypographyTags = "h1" | "h2" | "h3" | "h4" | "h5" | "p";
 export type TypographyVariants =

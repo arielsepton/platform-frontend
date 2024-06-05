@@ -1,8 +1,8 @@
 import { Outlet, useRouterState } from "@tanstack/react-router";
-import { generateBreadcrumbs } from "components/Header/Breadcrumb/generateBreadcrumbs";
-import Header from "components/Header/Header";
+import { generateBreadcrumbs } from "@/components/header/breadcrumb/generateBreadcrumbs";
+import Header from "@/components/header/Header";
 import { useState } from "react";
-import { useAuth } from "src/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 
 const Projects: React.FC = () => {
   const router = useRouterState();

@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "components/*": ["./src/Components/*"]
+      "@/*": ["./src/*"] // '@/' you can add any required alias here
     },
     "types": ["cypress", "node"],
     "target": "ES2020",

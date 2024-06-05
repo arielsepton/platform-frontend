@@ -1,8 +1,7 @@
 /// <reference types="vite-plugin-svgr/client" />
-
-import AppsOverview from "../../../assets/apps_overview.svg?react";
+import "@/index.css";
+import AppsOverview from "@/assets/apps_overview.svg?react";
 import SidebarItem from "./SidebarItem";
-import "src/index.css";
 
 describe("SidebarItem", () => {
   const item = { icon: <AppsOverview />, label: "Applications", path: "/" };

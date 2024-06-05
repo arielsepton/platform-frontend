@@ -1,17 +1,17 @@
 /// <reference types="vite-plugin-svgr/client" />
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import AppIcon from "../../assets/app-icon.svg?react";
-import Modal from "components/Modal/Modal";
+import AppIcon from "@/assets/app-icon.svg?react";
+import Modal from "@/components/modal/Modal";
 import React, { useState } from "react";
-import Typography from "components/Typography/Typography";
-import Button from "components/Button/Button";
-import { APP_NAME } from "../../common/consts";
-import Input from "components/Form/Input/Input";
+import Typography from "@/components/typography/Typography";
+import Button from "@/components/button/Button";
+import { APP_NAME } from "@/common/consts";
+import Input from "@/components/form/input/Input";
 import { useRouter } from "@tanstack/react-router";
-import { useAuth } from "../../hooks/useAuth";
-import { useDataMutation } from "../../hooks/useDataMutation";
-import { User } from "../../models/user/user";
-import { AuthData } from "../../models/auth/authData";
+import { useAuth } from "@/hooks/useAuth";
+import { useDataMutation } from "@/hooks/useDataMutation";
+import { User } from "@/models/user/user";
+import { AuthData } from "@/models/auth/authData";
 
 const Login: React.FC = () => {
   const router = useRouter();

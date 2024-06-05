@@ -1,8 +1,8 @@
 /// <reference types="vite-plugin-svgr/client" />
 
-import Typography from "components/Typography/Typography";
-import EyeClosed from "../../../assets/eye-closed.svg?react";
-import EyeOpen from "../../../assets/eye-open.svg?react";
+import Typography from "@/components/typography/Typography";
+import EyeClosed from "@/assets/eye-closed.svg?react";
+import EyeOpen from "@/assets/eye-open.svg?react";
 import React, { useState, forwardRef, useCallback } from "react";
 
 interface InputProps {

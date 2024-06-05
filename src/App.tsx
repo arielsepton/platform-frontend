@@ -1,10 +1,10 @@
-import "./index.css";
+import "@/index.css";
 import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
-import { routeTree } from "./routeTree.gen";
-import { useAuth } from "./hooks/useAuth.ts";
-import NotFound from "./Pages/NotFound/NotFound.tsx";
+import { routeTree } from "@/routeTree.gen";
+import { useAuth } from "@/hooks/useAuth.ts";
+import NotFound from "@/pages/notFound/NotFound.tsx";
 
 export type RouterContext = {
   isAuthenticated: () => boolean;

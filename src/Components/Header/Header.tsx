@@ -1,12 +1,12 @@
 /// <reference types="vite-plugin-svgr/client" />
-import React, { Suspense } from "react";
-import AppIcon from "../../assets/app-icon.svg?react";
-import ArrowDown from "../../assets/arrow-down.svg?react";
-import Typography from "components/Typography/Typography";
-import Breadcrumb, { BreadcrumbItem } from "./Breadcrumb/Breadcrumb";
-import { APP_NAME } from "../../common/consts";
+import React, { Suspense, useCallback } from "react";
+import AppIcon from "@/assets/app-icon.svg?react";
+import ArrowDown from "@/assets/arrow-down.svg?react";
+import Typography from "@/components/typography/Typography";
+import Breadcrumb, { BreadcrumbItem } from "./breadcrumb/Breadcrumb";
+import { APP_NAME } from "@/common/consts";
 import { useRouter } from "@tanstack/react-router";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { lazy } from "react";
 
 type HeaderProps = {
@@ -30,10 +30,10 @@ const Header = React.memo(({ breadcrumbs, user }: HeaderProps) => {
   const router = useRouter();
   const { signOut, thumbnail } = useAuth();
 
-  const getFirstLetter: (input: string) => string = (input: string): string => {
-    const match = input.match(/\d+([a-zA-Z])/);
+  const getFirstLetter: () => string = useCallback(() => {
+    const match = user.match(/([a-zA-Z])/);
     return match ? match[1] : "";
-  };
+  }, [user]);
 
   return (
     <div className="w-full text-left bg-mono/basic-16 h-17 items-center justify-between gap-4 flex">
@@ -61,7 +61,7 @@ const Header = React.memo(({ breadcrumbs, user }: HeaderProps) => {
         <div className="relative flex justify-center items-center">
           {DynamicLoader(thumbnail)}
           <div className="text-white absolute inset-0 flex justify-center items-center">
-            {getFirstLetter(user).toUpperCase()}
+            {getFirstLetter().toUpperCase()}
           </div>
         </div>
         <div

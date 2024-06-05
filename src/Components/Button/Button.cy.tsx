@@ -1,5 +1,6 @@
+import "@/index.css";
 import Button from "./Button";
-import { ButtonVariants } from "./ButtonStyles";
+import { ButtonVariants } from "./buttonStyles";
 
 describe("Button component", () => {
   const buttonText = "Click me";

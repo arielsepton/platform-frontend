@@ -1,18 +1,20 @@
-import "src/index.css";
-import { BreadcrumbItem } from "./Breadcrumb/Breadcrumb";
+import "@/index.css";
+import { BreadcrumbItem } from "./breadcrumb/Breadcrumb";
 import Header from "./Header";
-import { APP_NAME } from "src/common/consts";
+import { APP_NAME } from "@/common/consts";
+
+const breadcrumbs: BreadcrumbItem[] = [
+  { text: "Home", isDropdown: false, shouldAddDivider: false },
+  { text: "Dashboard", isDropdown: false, shouldAddDivider: false },
+];
+const user = "Israel Israeli";
 
 describe("Header Component", () => {
-  const breadcrumbs: BreadcrumbItem[] = [
-    { text: "Home", isDropdown: false, shouldAddDivider: false },
-    { text: "Dashboard", isDropdown: false, shouldAddDivider: false },
-  ];
-  const user = "Israel Israeli";
+  beforeEach(() => {
+    cy.mount(<Header breadcrumbs={breadcrumbs} user={user} />);
+  });
 
   it("renders header with breadcrumbs and user info", () => {
-    cy.mount(<Header breadcrumbs={breadcrumbs} user={user} />);
-
     cy.contains(APP_NAME).should("be.visible");
     cy.contains("Home").should("be.visible");
     cy.contains("Dashboard").should("be.visible");
@@ -20,14 +22,10 @@ describe("Header Component", () => {
   });
 
   it("renders user thumbnail", () => {
-    cy.mount(<Header breadcrumbs={breadcrumbs} user={user} />);
-
     cy.get("svg").should("have.length", 3); // AppIcon, ArrowDown, and user thumbnail
   });
 
   it("renders breadcrumbs correctly", () => {
-    cy.mount(<Header breadcrumbs={breadcrumbs} user={user} />);
-
     cy.get("nav").within(() => {
       cy.contains("Home").should("be.visible");
       cy.contains("Dashboard").should("be.visible");
@@ -35,8 +33,6 @@ describe("Header Component", () => {
   });
 
   it("loads and displays user thumbnail dynamically", () => {
-    cy.mount(<Header breadcrumbs={breadcrumbs} user={user} />);
-
     cy.get(".relative").within(() => {
       cy.get("svg").should("exist");
     });

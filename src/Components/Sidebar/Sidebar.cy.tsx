@@ -1,7 +1,7 @@
+import "@/index.css";
 import SideBar from "./Sidebar";
 import { sidebarItems } from "./items";
-import "src/index.css";
-import { TestRouter } from "../../TestRouter.js";
+import { TestRouter } from "@/TestRouter.js";
 
 describe("SideBar component", () => {
   beforeEach(() => {

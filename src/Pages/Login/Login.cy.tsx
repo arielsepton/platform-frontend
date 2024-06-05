@@ -1,6 +1,6 @@
-import "src/index.css";
+import "@/index.css";
 import Login from "./Login";
-import { APP_NAME } from "src/common/consts";
+import { APP_NAME } from "@/common/consts";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 describe("Login Component", () => {

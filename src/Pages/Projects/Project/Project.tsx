@@ -1,6 +1,6 @@
 import { Outlet, useRouterState } from "@tanstack/react-router";
-import Container from "components/Container/Container";
-import Sidebar from "components/Sidebar/Sidebar";
+import Container from "@/components/container/Container";
+import Sidebar from "@/components/sidebar/Sidebar";
 
 const Project: React.FC = () => {
   const router = useRouterState();

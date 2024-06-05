@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { sidebarItems } from "./items";
-import SidebarItem from "./SidebarItem/SidebarItem";
-import { isPathMatching } from "src/utils/isPathMatching";
+import SidebarItem from "./sidebarItem/SidebarItem";
+import { isPathMatching } from "@/utils/isPathMatching";
 import { Link } from "@tanstack/react-router";
 
 export type SidebarProps = {

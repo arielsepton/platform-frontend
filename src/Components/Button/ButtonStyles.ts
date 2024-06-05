@@ -1,4 +1,4 @@
-import { TypographyVariants } from "components/Typography/Typography";
+import { TypographyVariants } from "@/components/typography/Typography";
 
 export type ButtonVariants =
   | "primary"

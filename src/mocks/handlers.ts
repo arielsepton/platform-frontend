@@ -1,5 +1,5 @@
 import { http, HttpHandler, HttpResponse } from "msw";
-import { API_URL } from "src/common/consts";
+import { API_URL } from "@/common/consts";
 
 const containersHandlers: HttpHandler[] = [
   http.get(

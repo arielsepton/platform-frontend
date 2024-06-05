@@ -1,4 +1,4 @@
-import "src/index.css";
+import "@/index.css";
 import Breadcrumb, { BreadcrumbItem } from "./Breadcrumb";
 
 describe("Breadcrumb Component", () => {

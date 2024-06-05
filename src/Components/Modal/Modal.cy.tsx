@@ -1,5 +1,5 @@
+import "@/index.css";
 import Modal from "./Modal";
-import "src/index.css";
 
 describe("Modal Component", () => {
   it("renders children correctly", () => {

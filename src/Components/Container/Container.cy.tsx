@@ -1,4 +1,4 @@
-import "src/index.css";
+import "@/index.css";
 import Container from "./Container";
 
 describe("Container Component", () => {

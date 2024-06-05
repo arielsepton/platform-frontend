@@ -6,10 +6,10 @@ import {
   ButtonVariants,
   ButtonSizes,
   buttonTypographyClass,
-} from "./ButtonStyles";
+} from "./buttonStyles";
 import Typography, {
   TypographyVariants,
-} from "components/Typography/Typography";
+} from "@/components/typography/Typography";
 
 interface ButtonProps {
   variant: ButtonVariants;
