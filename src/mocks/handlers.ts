@@ -12,6 +12,12 @@ const containersHandlers: HttpHandler[] = [
       });
     }
   ),
+  http.get(`${API_URL}/apps`, () => {
+    return HttpResponse.json({
+      containerNames: ["nginx", "redis", "h", "f", "fff", "Ffff", "redis", "h"],
+      count: 9,
+    });
+  }),
 ];
 
 const secretsHandlers: HttpHandler[] = [

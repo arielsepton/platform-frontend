@@ -12,7 +12,7 @@ const Projects: React.FC = () => {
   const [breadcrumbs] = useState(generateBreadcrumbs(currentPath));
 
   return (
-    <div className="h-screen flex flex-col">
+    <div className="h-screen flex flex-col overflow-hidden">
       <div className="h-17">
         <Header breadcrumbs={breadcrumbs} user={username} />
       </div>
