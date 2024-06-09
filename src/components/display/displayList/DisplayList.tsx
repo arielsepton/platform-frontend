@@ -10,7 +10,7 @@ type DisplayListProps = {
 };
 
 const DisplayList = React.memo(({ items }: DisplayListProps) => (
-  <div id="scroll" className="flex justify-center overflow-y-auto grow-0 mb-10">
+  <div id="scroll" className="flex justify-center overflow-y-auto grow-0">
     <div className="grow-0 flex flex-col w-full">
       {items.map((proj, i) => (
         <div className="flex bg-mono/basic-16 w-full justify-center mt-2 pl-5 py-4 border border-mono/basic-10 rounded-md">

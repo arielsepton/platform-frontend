@@ -16,8 +16,6 @@ import Pagination from "@components/pagination/Pagination";
 import DisplayGrid from "@components/display/displayGrid/DisplayGrid";
 import DisplayList from "@components/display/displayList/DisplayList";
 
-type Display = "grid" | "rows";
-
 const ProjectsOverview: React.FC = React.memo(() => {
   const [currentPage, setCurrentPage] = React.useState<number>(1);
 
@@ -29,7 +27,7 @@ const ProjectsOverview: React.FC = React.memo(() => {
     }
   );
   const { register, handleSubmit } = useForm();
-  const [display, setDisplay] = useState<Display>("grid");
+  const [isDisplayGrid, setDisplayGrid] = useState<boolean>(true);
   const totalPages = isSuccess ? (data?.body as { count: number }).count : 0;
 
   const projects: () => {
@@ -67,17 +65,17 @@ const ProjectsOverview: React.FC = React.memo(() => {
             <Typography className="px-3">
               <Rectangle />
             </Typography>
-            <div onClick={() => setDisplay("grid")}>
+            <div onClick={() => setDisplayGrid(true)}>
               <Typography
-                className={`rounded-l-lg p-2.25 border-y border-l border-mono/basic-11 cursor-pointer ${display == "grid" ? "text-mono/basic-1 bg-mono/basic-9" : "text-mono/basic-8 bg-mono/basic-13"}`}
+                className={`rounded-l-lg p-2.25 border-y border-l border-mono/basic-11 cursor-pointer ${isDisplayGrid ? "text-mono/basic-1 bg-mono/basic-9" : "text-mono/basic-8 bg-mono/basic-13"}`}
               >
                 <Grid />
               </Typography>
             </div>
 
-            <div onClick={() => setDisplay("rows")}>
+            <div onClick={() => setDisplayGrid(false)}>
               <Typography
-                className={`rounded-r-lg p-2.5 border border-mono/basic-11 cursor-pointer ${display == "rows" ? "text-mono/basic-1 bg-mono/basic-9" : "text-mono/basic-8 bg-mono/basic-13"}`}
+                className={`rounded-r-lg p-2.5 border border-mono/basic-11 cursor-pointer ${!isDisplayGrid ? "text-mono/basic-1 bg-mono/basic-9" : "text-mono/basic-8 bg-mono/basic-13"}`}
               >
                 <Union />
               </Typography>
@@ -101,11 +99,12 @@ const ProjectsOverview: React.FC = React.memo(() => {
             <div className="w-12 h-12 rounded-full animate-spin border-4 border-solid border-green/basic-6 border-t-transparent shadow-md"></div>
           </div>
         )}
-        {isSuccess && (
-          //   <DisplayGrid items={projects().containerNames}></DisplayGrid>
+        {isSuccess && isDisplayGrid && (
+          <DisplayGrid items={projects().containerNames}></DisplayGrid>
+        )}
+        {isSuccess && !isDisplayGrid && (
           <DisplayList items={projects().containerNames}></DisplayList>
         )}
-
         {isSuccess && (
           <div className="flex items-center justify-between my-5">
             <Typography variant="body-sm" className="text-mono/basic-4">
