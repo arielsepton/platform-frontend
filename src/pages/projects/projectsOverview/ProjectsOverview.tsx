@@ -4,7 +4,7 @@ import ChevronRight from "@/assets/chevron-right.svg?react";
 import Typography from "@/components/typography/Typography";
 import Container from "@/components/container/Container";
 import { useDataQuery } from "@/hooks/useDataQuery";
-import ProjectCard from "@components/projects/project/ProjectCard";
+import Card from "@components/card/Card";
 
 const ProjectsOverview: React.FC = () => {
   const { data, status, error } = useDataQuery("containerNames", "/apps");
@@ -23,10 +23,13 @@ const ProjectsOverview: React.FC = () => {
         <Typography variant="headline-xl">Projects Overview</Typography>
         <div className="w-full py-2.25 px-3 bg-mono/basic-11 my-6"></div>
 
-        <div className="flex justify-center overflow-y-auto max-h-min">
+        <div
+          className="flex justify-center overflow-y-auto"
+          id="journal-scroll"
+        >
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 h-full w-full">
             {projects.containerNames.map((_, i) => (
-              <ProjectCard
+              <Card
                 key={i}
                 name="Project name"
                 mador="mador name"
@@ -37,7 +40,7 @@ const ProjectsOverview: React.FC = () => {
         </div>
 
         {/* if status is pending, dont show */}
-        <div className="flex items-center justify-between my-5 h-4">
+        <div className="flex items-center justify-between my-5">
           <Typography variant="body-sm" className="text-mono/basic-4">
             Shows 9 of 92
           </Typography>

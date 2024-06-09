@@ -6,14 +6,24 @@ import React from "react";
 
 interface CardProps {
   name: string;
-  anaf: string;
-  mador: string;
+  anaf?: string;
+  mador?: string;
+  info?: string;
+  capp?: string;
 }
 
-const ProjectCard: React.FC<CardProps> = ({ name, anaf, mador }: CardProps) => (
+const Card: React.FC<CardProps> = ({
+  name,
+  anaf,
+  mador,
+  capp,
+  info,
+}: CardProps) => (
   <div className="flex flex-col rounded-md bg-mono/basic-16 border border-mono/basic-10 w-full h-full max-h-28">
     <div className="flex items-center pr-2 pt-2 flex-none ml-auto">
-      <MoreInfoDots />
+      <Typography className="cursor-pointer">
+        <MoreInfoDots />
+      </Typography>
     </div>
     <div className="flex flex-none pl-5 pb-8 flex-col flex-grow overflow-hidden">
       <div className="flex flex-row">
@@ -31,13 +41,31 @@ const ProjectCard: React.FC<CardProps> = ({ name, anaf, mador }: CardProps) => (
           >
             {name}
           </Typography>
-          <Typography variant="label-md" className="text-mono/basic-5 truncate">
-            {anaf} | {mador}
-          </Typography>
+          {anaf && mador && (
+            <Typography
+              variant="label-md"
+              className="text-mono/basic-5 truncate"
+            >
+              {anaf} | {mador}
+            </Typography>
+          )}
+          {capp && (
+            <Typography
+              variant="label-md"
+              className="text-mono/basic-5 bg-mono/basic-13 rounded-full w-min py-1.5 px-3 truncate"
+            >
+              {capp}
+            </Typography>
+          )}
+          {info && (
+            <div className="border border-mono/basic-10">
+              <Typography variant="body-md">{info}</Typography>
+            </div>
+          )}
         </div>
       </div>
     </div>
   </div>
 );
 
-export default ProjectCard;
+export default Card;
