@@ -5,9 +5,12 @@ import Typography from "@/components/typography/Typography";
 import Container from "@/components/container/Container";
 import { useDataQuery } from "@/hooks/useDataQuery";
 import Card from "@components/card/Card";
+import SearchBox from "@components/searchBox/SearchBox";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 const ProjectsOverview: React.FC = () => {
   const { data, status, error } = useDataQuery("containerNames", "/apps");
+  const { register, handleSubmit } = useForm();
 
   const projects = (data?.body as {
     containerNames: string[];
@@ -17,12 +20,21 @@ const ProjectsOverview: React.FC = () => {
   console.log(error);
   console.log(status);
 
+  const onSubmit: SubmitHandler<FieldValues> = async ({ search }) => {
+    console.log(search);
+  };
+
   return (
     <Container>
       <div className="mt-10 text-mono/basic-1 mx-10 w-full max-h-full flex flex-col">
         <Typography variant="headline-xl">Projects Overview</Typography>
-        <div className="w-full py-2.25 px-3 bg-mono/basic-11 my-6"></div>
-
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <SearchBox
+            {...register("search")}
+            autoComplete="search"
+            placeholder="Search repositories and applications..."
+          />
+        </form>
         <div
           className="flex justify-center overflow-y-auto"
           id="journal-scroll"
