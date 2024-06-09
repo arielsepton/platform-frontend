@@ -29,7 +29,7 @@ describe("Button component", () => {
     cy.mount(
       <Button variant="primary" icon={icon} iconPosition="left">
         {buttonText}
-      </Button>
+      </Button>,
     );
     cy.get("button").contains(buttonText).should("be.visible");
     cy.get(".icon-left").should("be.visible");
@@ -39,7 +39,7 @@ describe("Button component", () => {
     cy.mount(
       <Button variant="primary" icon={icon} iconPosition="right">
         {buttonText}
-      </Button>
+      </Button>,
     );
     cy.get("button").contains(buttonText).should("be.visible");
     cy.get(".icon-right").should("be.visible");
@@ -49,7 +49,7 @@ describe("Button component", () => {
     cy.mount(
       <Button variant="primary" icon={icon} iconPosition="top">
         {buttonText}
-      </Button>
+      </Button>,
     );
     cy.get("button").contains(buttonText).should("be.visible");
     cy.get(".icon-top").should("be.visible");
@@ -59,7 +59,7 @@ describe("Button component", () => {
     cy.mount(
       <Button variant="primary" icon={icon} iconPosition="bottom">
         {buttonText}
-      </Button>
+      </Button>,
     );
     cy.get("button").contains(buttonText).should("be.visible");
     cy.get(".icon-bottom").should("be.visible");
@@ -70,7 +70,7 @@ describe("Button component", () => {
     cy.mount(
       <Button variant="primary" onClick={onClick}>
         {buttonText}
-      </Button>
+      </Button>,
     );
     cy.get("button").click();
     cy.get("@onClick").should("have.been.calledOnce");
@@ -81,7 +81,7 @@ describe("Button component", () => {
     cy.mount(
       <Button variant="primary-disabled" onClick={onClick} disabled={true}>
         {buttonText}
-      </Button>
+      </Button>,
     );
     cy.get("button").should("be.disabled");
     cy.get("button").click({ force: true });

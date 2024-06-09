@@ -38,7 +38,7 @@ const SidebarItem: React.FC<SideBarItemProps> = React.memo(
         </Typography>
       </div>
     );
-  }
+  },
 );
 
 export default SidebarItem;

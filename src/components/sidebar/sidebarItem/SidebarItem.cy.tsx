@@ -14,7 +14,7 @@ describe("SidebarItem", () => {
         item={item}
         isSidebarExpanded={isSidebarExpanded}
         selectedOption={selectedOption}
-      />
+      />,
     );
   });
 

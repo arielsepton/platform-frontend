@@ -12,7 +12,7 @@ const Container: React.FC<ContainerProps> = React.memo(
         <div className="flex h-full">{children}</div>
       </div>
     </div>
-  )
+  ),
 );
 
 export default Container;

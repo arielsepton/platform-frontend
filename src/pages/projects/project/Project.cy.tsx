@@ -7,7 +7,7 @@ describe("Project Component", () => {
     cy.mount(
       <TestRouter>
         <Project />
-      </TestRouter>
+      </TestRouter>,
     );
   });
 
@@ -17,7 +17,7 @@ describe("Project Component", () => {
 
   it("renders the Container component", () => {
     cy.get(
-      "div.grow.h-full.min-w-0.bg-cover.bg-no-repeat.bg-login-pattern"
+      "div.grow.h-full.min-w-0.bg-cover.bg-no-repeat.bg-login-pattern",
     ).should("exist");
   });
 });

@@ -8,7 +8,7 @@ describe("Projects Component", () => {
     cy.mount(
       <TestRouter>
         <Projects />
-      </TestRouter>
+      </TestRouter>,
     );
   });
 

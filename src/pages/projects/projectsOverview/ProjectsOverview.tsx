@@ -23,7 +23,7 @@ const ProjectsOverview: React.FC = () => {
         <Typography variant="headline-xl">Projects Overview</Typography>
         <div className="w-full py-2.25 px-3 bg-mono/basic-11 my-6"></div>
 
-        <div className="flex justify-center overflow-y-auto">
+        <div className="flex justify-center overflow-y-auto max-h-min">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 h-full w-full">
             {projects.containerNames.map((_, i) => (
               <ProjectCard

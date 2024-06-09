@@ -10,7 +10,7 @@ const containersHandlers: HttpHandler[] = [
         containerNames: ["nginx", "redis"],
         count: 2,
       });
-    }
+    },
   ),
   http.get(`${API_URL}/apps`, () => {
     return HttpResponse.json({
@@ -75,7 +75,7 @@ const authHandlers: HttpHandler[] = [
         user: "Dana Israeli",
         token: "bbsssisqsoiqoiiihbcbbbdwwwwwwwnnnwwwnmnsskksks",
         message: "unauthorized user",
-      }
+      },
       // { status: 401 }
     );
   }),
