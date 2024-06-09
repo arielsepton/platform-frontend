@@ -9,7 +9,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives",
     "lint:ci": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 5",
     "preview": "vite preview",
-    "reviewable": "npm run build && npm run lint && npm run cy:run && npm run format",
+    "reviewable": "npm run build && npm run lint && npm run cy:run",
     "cy:open": "cypress open --component --browser chrome --config-file ./cypress.config.ts",
     "cy:run": "cypress run --component --browser chrome --config-file ./cypress.config.ts",
     "prettier": "prettier .",

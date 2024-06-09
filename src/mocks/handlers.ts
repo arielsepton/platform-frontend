@@ -10,12 +10,43 @@ const containersHandlers: HttpHandler[] = [
         containerNames: ["nginx", "redis"],
         count: 2,
       });
-    },
+    }
   ),
-  http.get(`${API_URL}/apps`, () => {
+  http.get(`${API_URL}/apps?page=1`, () => {
     return HttpResponse.json({
-      containerNames: ["nginx", "redis", "h", "f", "fff", "Ffff", "redis", "h"],
+      containerNames: [
+        "nginx",
+        "redis",
+        "h",
+        "f",
+        "fff",
+        "Ffff",
+        "redis",
+        "h",
+        "defef",
+      ],
+      count: 92,
+    });
+  }),
+  http.get(`${API_URL}/apps?page=2`, () => {
+    return HttpResponse.json({
+      containerNames: [
+        "nginx",
+        "redis",
+        "h",
+        "f",
+        "fff",
+        "Ffff",
+        "redis",
+        "h",
+        "ddd",
+      ],
       count: 9,
+    });
+  }),
+  http.get(`${API_URL}/apps?page=3`, () => {
+    return HttpResponse.json({
+      containerNames: ["nginx", "redis", "h", "f"],
     });
   }),
 ];
@@ -75,7 +106,7 @@ const authHandlers: HttpHandler[] = [
         user: "Dana Israeli",
         token: "bbsssisqsoiqoiiihbcbbbdwwwwwwwnnnwwwnmnsskksks",
         message: "unauthorized user",
-      },
+      }
       // { status: 401 }
     );
   }),
