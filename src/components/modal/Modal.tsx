@@ -34,7 +34,7 @@ const Modal: React.FC<ModalProps> = ({
     <div className="fixed inset-0 flex items-center justify-center">
       {children}
     </div>,
-    modalRoot!,
+    modalRoot!
   );
 };
 

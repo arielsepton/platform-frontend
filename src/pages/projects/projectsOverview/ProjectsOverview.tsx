@@ -6,7 +6,6 @@ import Plus from "@/assets/plus.svg?react";
 import Typography from "@/components/typography/Typography";
 import Container from "@/components/container/Container";
 import { useDataQuery } from "@/hooks/useDataQuery";
-import Card from "@components/card/Card";
 import SearchBox from "@components/searchBox/SearchBox";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import React, { useState } from "react";
@@ -50,47 +49,52 @@ const ProjectsOverview: React.FC = React.memo(() => {
 
   return (
     <Container>
-      <div className="mt-10 text-mono/basic-1 mx-10 w-full max-h-full flex flex-col">
-        <Typography variant="headline-xl">Projects Overview</Typography>
-        <div className="flex flex-row flex-nowrap w-full my-6">
-          <form onSubmit={handleSubmit(onSearch)} className="grow items-center">
-            <SearchBox
-              disabled={status != "success"}
-              {...register("search")}
-              autoComplete="search"
-              placeholder="Search repositories and applications..."
-            />
-          </form>
-          <div className=" flex items-center">
-            <Typography className="px-3">
-              <Rectangle />
-            </Typography>
-            <div onClick={() => setDisplayGrid(true)}>
-              <Typography
-                className={`rounded-l-lg p-2.25 border-y border-l border-mono/basic-11 cursor-pointer ${isDisplayGrid ? "text-mono/basic-1 bg-mono/basic-9" : "text-mono/basic-8 bg-mono/basic-13"}`}
-              >
-                <Grid />
-              </Typography>
-            </div>
-
-            <div onClick={() => setDisplayGrid(false)}>
-              <Typography
-                className={`rounded-r-lg p-2.5 border border-mono/basic-11 cursor-pointer ${!isDisplayGrid ? "text-mono/basic-1 bg-mono/basic-9" : "text-mono/basic-8 bg-mono/basic-13"}`}
-              >
-                <Union />
-              </Typography>
-            </div>
-
-            <Typography className="px-3">
-              <Rectangle />
-            </Typography>
-            <Button
-              variant="primary"
-              icon={<Plus />}
-              className="max-h-min truncate"
+      <div className="mt-10 text-mono/basic-1 mx-10 w-full flex flex-col">
+        <div className="max-h-1/4">
+          <Typography variant="headline-xl">Projects Overview</Typography>
+          <div className="flex flex-row flex-nowrap w-full my-6">
+            <form
+              onSubmit={handleSubmit(onSearch)}
+              className="grow items-center"
             >
-              Add new project
-            </Button>
+              <SearchBox
+                disabled={status != "success"}
+                {...register("search")}
+                autoComplete="search"
+                placeholder="Search repositories and applications..."
+              />
+            </form>
+            <div className=" flex items-center">
+              <Typography className="px-3">
+                <Rectangle />
+              </Typography>
+              <div onClick={() => setDisplayGrid(true)}>
+                <Typography
+                  className={`rounded-l-lg p-2.25 border-y border-l border-mono/basic-11 cursor-pointer ${isDisplayGrid ? "text-mono/basic-1 bg-mono/basic-9" : "text-mono/basic-8 bg-mono/basic-13"}`}
+                >
+                  <Grid />
+                </Typography>
+              </div>
+
+              <div onClick={() => setDisplayGrid(false)}>
+                <Typography
+                  className={`rounded-r-lg p-2.5 border border-mono/basic-11 cursor-pointer ${!isDisplayGrid ? "text-mono/basic-1 bg-mono/basic-9" : "text-mono/basic-8 bg-mono/basic-13"}`}
+                >
+                  <Union />
+                </Typography>
+              </div>
+
+              <Typography className="px-3">
+                <Rectangle />
+              </Typography>
+              <Button
+                variant="primary"
+                icon={<Plus />}
+                className="max-h-min truncate"
+              >
+                Add new project
+              </Button>
+            </div>
           </div>
         </div>
 
@@ -99,14 +103,20 @@ const ProjectsOverview: React.FC = React.memo(() => {
             <div className="w-12 h-12 rounded-full animate-spin border-4 border-solid border-green/basic-6 border-t-transparent shadow-md"></div>
           </div>
         )}
-        {isSuccess && isDisplayGrid && (
-          <DisplayGrid items={projects().containerNames}></DisplayGrid>
-        )}
-        {isSuccess && !isDisplayGrid && (
-          <DisplayList items={projects().containerNames}></DisplayList>
+        {isSuccess && (
+          <div
+            id="scroll"
+            className="flex justify-center overflow-y-scroll grow-0 max-h-[65%] h-[65%] min-h-[65%]"
+          >
+            {isDisplayGrid ? (
+              <DisplayGrid items={projects().containerNames} />
+            ) : (
+              <DisplayList items={projects().containerNames} />
+            )}
+          </div>
         )}
         {isSuccess && (
-          <div className="flex items-center justify-between my-5">
+          <div className="flex items-center justify-between h-[10%]">
             <Typography variant="body-sm" className="text-mono/basic-4">
               Shows {9} of {totalPages}
             </Typography>

@@ -8,7 +8,7 @@ describe("Projects Component", () => {
     cy.mount(
       <TestRouter>
         <Projects />
-      </TestRouter>,
+      </TestRouter>
     );
   });
 
@@ -18,7 +18,7 @@ describe("Projects Component", () => {
 
   it("has the correct structure with header and main content", () => {
     cy.get(".h-screen").should("exist");
-    cy.get(".h-17").should("exist");
-    cy.get(".w-full.h-full.flex").should("exist");
+    cy.get(".h-full").should("exist");
+    cy.get(".w-full.flex").should("exist");
   });
 });

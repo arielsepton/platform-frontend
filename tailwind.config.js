@@ -161,6 +161,7 @@ export default {
     extend: {
       padding: {
         0.75: "3px",
+        1.25: "5px",
         2.25: "9px",
         4.25: "17px",
         5.5: "22px",
