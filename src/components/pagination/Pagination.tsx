@@ -59,13 +59,18 @@ const Pagination: React.FC<PaginationProps> = ({
         </Typography>
       </button>
 
-      {paginationRange.map((pageNumber) => {
+      {paginationRange.map((pageNumber, i) => {
         if (typeof pageNumber === "string") {
-          return <div className="pagination-item dots">{DOTS}</div>;
+          return (
+            <div key={i} className="pagination-item dots">
+              {DOTS}
+            </div>
+          );
         }
 
         return (
           <div
+            key={i}
             onClick={() => onPageChange(pageNumber)}
             className="cursor-pointer"
           >

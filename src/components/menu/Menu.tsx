@@ -1,7 +1,7 @@
 /// <reference types="vite-plugin-svgr/client" />
 import Rectangle from "@/assets/rectangle18.svg?react";
 import Typography from "@components/typography/Typography";
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 
 type Item = string | "divider";
@@ -9,37 +9,16 @@ type Item = string | "divider";
 interface MenuProps {
   items: Item[];
   isOpen: boolean;
-  toggleButtonRef: React.RefObject<HTMLDivElement>;
+  target: HTMLDivElement | null;
 }
 
 const Menu: React.FC<MenuProps> = React.memo(
-  ({ items, isOpen, toggleButtonRef }: MenuProps) => {
-    const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
-    const menuRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-      const toggleButton = toggleButtonRef.current;
-      const menuElement = menuRef.current;
-
-      if (toggleButton && menuElement) {
-        const rect = toggleButton.getBoundingClientRect();
-        const leftPosition = rect.left - rect.width * 8;
-        setMenuPosition({
-          top: rect.top + rect.height / 2,
-          left: leftPosition,
-        });
-      }
-    }, [isOpen, menuPosition, toggleButtonRef]);
-
+  ({ items, isOpen, target }: MenuProps) => {
     return isOpen
       ? ReactDOM.createPortal(
-          <div
-            ref={menuRef}
-            className="pointer-events-none fixed"
-            style={{ top: menuPosition.top, left: menuPosition.left }}
-          >
-            <div className="pointer-events-auto">
-              <div className="mt-4 mr-10 w-56 rounded-md shadow-lg bg-mono/basic-10 border border-mono/basic-8 p-1">
+          <div className="pointer-events-none relative ">
+            <div className="pointer-events-auto absolute right-0 top-4">
+              <div className=" w-56 rounded-md shadow-lg bg-mono/basic-10 border border-mono/basic-8 p-1">
                 {items.map((item, i) =>
                   item !== "divider" ? (
                     <Typography
@@ -58,7 +37,7 @@ const Menu: React.FC<MenuProps> = React.memo(
               </div>
             </div>
           </div>,
-          document.getElementById("menu-root")!
+          target!
         )
       : null;
   }

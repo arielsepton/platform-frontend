@@ -1,8 +1,9 @@
 /// <reference types="vite-plugin-svgr/client" />
+
 import Thumbnail from "@/assets/account-thumbnails/color-3.svg?react";
 import MoreInfoDots from "@/assets/moreInfo_dots.svg?react";
 import Typography from "@components/typography/Typography";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Menu from "@components/menu/Menu";
 
 interface CardProps {
@@ -16,22 +17,20 @@ interface CardProps {
 const Card: React.FC<CardProps> = React.memo(
   ({ name, anaf, mador, capp, info }: CardProps) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const toggleButtonRef = useRef<HTMLDivElement>(null);
-
-    const toggleMenu = () => {
-      setIsMenuOpen(!isMenuOpen);
-    };
+    const [target, setTarget] = useState<HTMLDivElement | null>(null);
+    const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
     return (
       <div className="flex flex-col rounded-md bg-mono/basic-16 border border-mono/basic-10 grow">
         <div className="flex items-center pr-2 pt-2 flex-none ml-auto">
-          <div onClick={toggleMenu} ref={toggleButtonRef}>
+          <div onClick={toggleMenu}>
             <Typography
               className={`cursor-pointer ${isMenuOpen ? "rounded-full bg-mono/basic-11 text-green/basic-6" : "text-mono/basic-4"}`}
             >
               <MoreInfoDots />
             </Typography>
           </div>
+          <div ref={setTarget}></div>
           {isMenuOpen && (
             <Menu
               items={[
@@ -42,7 +41,7 @@ const Card: React.FC<CardProps> = React.memo(
                 "settings",
               ]}
               isOpen={isMenuOpen}
-              toggleButtonRef={toggleButtonRef}
+              target={target}
             />
           )}
         </div>
