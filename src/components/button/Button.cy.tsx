@@ -8,14 +8,8 @@ describe("Button component", () => {
 
   const variants: ButtonVariants[] = [
     "primary",
-    "primary-onPress",
-    "primary-disabled",
     "secondary",
-    "secondary-onPress",
-    "secondary-disabled",
     "link",
-    "link-onPress",
-    "link-disabled",
   ];
 
   variants.forEach((variant) => {
@@ -79,7 +73,7 @@ describe("Button component", () => {
   it("should not call onClick when button is disabled", () => {
     const onClick = cy.stub().as("onClick");
     cy.mount(
-      <Button variant="primary-disabled" onClick={onClick} disabled={true}>
+      <Button variant="primary" onClick={onClick} disabled={true}>
         {buttonText}
       </Button>,
     );

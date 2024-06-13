@@ -8,14 +8,20 @@ interface SelectProps {
   autoComplete?: string;
   className?: string;
   options: string[];
+  label?: string;
 }
 
 const Select: React.FC<SelectProps> = forwardRef<
   HTMLSelectElement,
   SelectProps
->(({ placeholder, className, options, ...props }, ref) => {
+>(({ placeholder, className, options, label, ...props }, ref) => {
   return (
-    <div className={`flex flex-col group ${className || ""}`}>
+    <div className={`flex flex-col group mb-5 ${className || ""}`}>
+      {label && (
+        <Typography variant="label-md" className="text-mono/basic-5 mb-1">
+          {label}
+        </Typography>
+      )}
       <div className="min-h-min relative group">
         <select
           ref={ref}
@@ -30,7 +36,6 @@ const Select: React.FC<SelectProps> = forwardRef<
             <option value={i}>{i}</option>
           ))}
         </select>
-        {/* <input ref={ref} {...props} type="text" placeholder={placeholder} /> */}
         <div className="absolute top-0 right-0 h-full flex items-center pr-3 text-mono/basic-4 group-focus-within:text-mono/basic-1">
           <ArrowDown />
         </div>

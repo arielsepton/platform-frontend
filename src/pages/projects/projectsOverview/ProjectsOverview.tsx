@@ -1,33 +1,39 @@
 /// <reference types="vite-plugin-svgr/client" />
-import Grid from "@/assets/grid.svg?react";
-import Union from "@/assets/union.svg?react";
-import Rectangle from "@/assets/rectangle2.svg?react";
 import Plus from "@/assets/plus.svg?react";
 import Typography from "@/components/typography/Typography";
 import Container from "@/components/container/Container";
 import { useDataQuery } from "@/hooks/useDataQuery";
-import SearchBox from "@components/searchBox/SearchBox";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler } from "react-hook-form";
 import React, { useState } from "react";
-import Button from "@components/button/Button";
 import { keepPreviousData } from "@tanstack/react-query";
 import Pagination from "@components/pagination/Pagination";
 import DisplayGrid from "@components/display/displayGrid/DisplayGrid";
 import DisplayList from "@components/display/displayList/DisplayList";
+import DisplayBar from "@components/display/displayBar/DisplayBar";
+import Button from "@components/button/Button";
+import AddProjectModal from "@components/projects/project/addProjectModal/AddProjectModal";
+import Spinner from "@components/spinner/Spinner";
+import ProjectCard from "@components/projects/project/card/ProjectCard";
+import ProjectRow from "@components/projects/project/row/ProjectRow";
+import NoProjects from "@components/projects/project/noProjects/NoProjects";
 
 const ProjectsOverview: React.FC = React.memo(() => {
   const [currentPage, setCurrentPage] = React.useState<number>(1);
 
-  const { data, isSuccess, error, isPlaceholderData } = useDataQuery(
-    "/apps?page=" + currentPage,
+  const { data, isSuccess, isLoading, error, isPlaceholderData } = useDataQuery(
+    "/apps/" + currentPage,
     {
       placeholderData: keepPreviousData,
       queryKey: ["containerNames", currentPage],
     }
   );
-  const { register, handleSubmit } = useForm();
   const [isDisplayGrid, setDisplayGrid] = useState<boolean>(true);
-  const totalPages = isSuccess ? (data?.body as { count: number }).count : 0;
+  const totalPages = isSuccess
+    ? (data?.body as { totalCount: number }).totalCount
+    : 0;
+  const currentAmount = isSuccess ? (data?.body as { count: number }).count : 0;
+
+  const [showModal, setShowModal] = useState(false);
 
   const projects: () => {
     containerNames: string[];
@@ -52,84 +58,73 @@ const ProjectsOverview: React.FC = React.memo(() => {
       <div className="mt-10 text-mono/basic-1 mx-10 w-full flex flex-col">
         <div className="max-h-1/4">
           <Typography variant="headline-xl">Projects Overview</Typography>
-          <div className="flex flex-row flex-nowrap w-full my-6">
-            <form
-              onSubmit={handleSubmit(onSearch)}
-              className="grow items-center"
+          <DisplayBar
+            success={isSuccess}
+            onSearch={onSearch}
+            isDisplayGrid={isDisplayGrid}
+            setDisplayGrid={setDisplayGrid}
+          >
+            <Button
+              variant="primary"
+              icon={<Plus />}
+              className="max-h-min truncate"
+              onClick={() => setShowModal((prev) => !prev)}
             >
-              <SearchBox
-                disabled={status != "success"}
-                {...register("search")}
-                autoComplete="search"
-                placeholder="Search repositories and applications..."
-              />
-            </form>
-            <div className=" flex items-center">
-              <Typography className="px-3">
-                <Rectangle />
-              </Typography>
-              <div onClick={() => setDisplayGrid(true)}>
-                <Typography
-                  className={`rounded-l-lg p-2.25 border-y border-l border-mono/basic-11 cursor-pointer ${isDisplayGrid ? "text-mono/basic-1 bg-mono/basic-9" : "text-mono/basic-8 bg-mono/basic-13"}`}
-                >
-                  <Grid />
-                </Typography>
-              </div>
-
-              <div onClick={() => setDisplayGrid(false)}>
-                <Typography
-                  className={`rounded-r-lg p-2.5 border border-mono/basic-11 cursor-pointer ${!isDisplayGrid ? "text-mono/basic-1 bg-mono/basic-9" : "text-mono/basic-8 bg-mono/basic-13"}`}
-                >
-                  <Union />
-                </Typography>
-              </div>
-
-              <Typography className="px-3">
-                <Rectangle />
-              </Typography>
-              <Button
-                variant="primary"
-                icon={<Plus />}
-                className="max-h-min truncate"
-              >
-                Add new project
-              </Button>
-            </div>
-          </div>
+              Add new project
+            </Button>
+          </DisplayBar>
         </div>
 
-        {!isSuccess && (
-          <div className="flex justify-center w-full h-12">
-            <div className="w-12 h-12 rounded-full animate-spin border-4 border-solid border-green/basic-6 border-t-transparent shadow-md"></div>
-          </div>
-        )}
-        {isSuccess && (
-          <div
-            id="scroll"
-            className="flex justify-center overflow-y-scroll grow-0 max-h-[65%] h-[65%] min-h-[65%]"
-          >
-            {isDisplayGrid ? (
-              <DisplayGrid items={projects().containerNames} />
-            ) : (
-              <DisplayList items={projects().containerNames} />
-            )}
-          </div>
-        )}
-        {isSuccess && (
-          <div className="flex items-center justify-between h-[10%]">
-            <Typography variant="body-sm" className="text-mono/basic-4">
-              Shows {9} of {totalPages}
-            </Typography>
-            <Pagination
-              currentPage={currentPage}
-              totalCount={totalPages}
-              pageSize={9}
-              onPageChange={(page) => setCurrentPage(page)}
-              isPlaceholderData={isPlaceholderData}
-            />
-          </div>
+        {isLoading ? (
+          <Spinner />
+        ) : isSuccess && projects().containerNames.length > 0 ? (
+          <>
+            <div
+              id="scroll"
+              className="flex justify-center overflow-y-scroll grow-0 max-h-[65%] h-[65%] min-h-[65%]"
+            >
+              {isDisplayGrid ? (
+                <DisplayGrid>
+                  {projects().containerNames.map((_, i) => (
+                    <ProjectCard
+                      name="project name"
+                      anaf="anaf name"
+                      mador="mador name"
+                    />
+                  ))}
+                </DisplayGrid>
+              ) : (
+                <DisplayList>
+                  {projects().containerNames.map((_, i) => (
+                    <ProjectRow
+                      name="project name"
+                      anaf="anaf name"
+                      mador="mador name"
+                    />
+                  ))}
+                </DisplayList>
+              )}
+            </div>
+            <div className="flex items-center justify-between h-[10%]">
+              <Typography variant="body-sm" className="text-mono/basic-4">
+                Shows {currentAmount} of {totalPages}
+              </Typography>
+              <Pagination
+                currentPage={currentPage}
+                totalCount={totalPages}
+                pageSize={9}
+                onPageChange={(page) => setCurrentPage(page)}
+                isPlaceholderData={isPlaceholderData}
+              />
+            </div>
+          </>
+        ) : (
+          <NoProjects className="max-h-[65%] h-[65%] min-h-[65%]" />
         )}
       </div>
+      {showModal && (
+        <AddProjectModal setShowModal={setShowModal}></AddProjectModal>
+      )}
     </Container>
   );
 });

@@ -12,41 +12,42 @@ const containersHandlers: HttpHandler[] = [
       });
     }
   ),
-  http.get(`${API_URL}/apps?page=1`, () => {
+  http.get(`${API_URL}/apps/:page`, async ({ params }) => {
+    const requestParams = await params;
+    const page = requestParams.page;
+    console.log(`GET todos sent, params: ${requestParams.page}`);
+
+    console.log(`GET todos sent, params: ${JSON.stringify(requestParams)}`);
     return HttpResponse.json({
-      containerNames: [
-        "nginx",
-        "redis",
-        "h",
-        "f",
-        "fff",
-        "Ffff",
-        "redis",
-        "h",
-        "defef",
-      ],
-      count: 92,
+      containerNames:
+        page == "1"
+          ? ["nginx", "redis", "h", "f", "fff", "Ffff", "redis", "h", "defef"]
+          : ["project name", "project new", "backup"],
+      count: page == "1" ? 9 : 3,
+      totalCount: 12,
     });
   }),
-  http.get(`${API_URL}/apps?page=2`, () => {
+];
+
+const namespacesHandlers: HttpHandler[] = [
+  http.get(`${API_URL}/namespaces`, () => {
     return HttpResponse.json({
-      containerNames: [
-        "nginx",
-        "redis",
-        "h",
-        "f",
-        "fff",
-        "Ffff",
-        "redis",
-        "h",
-        "ddd",
-      ],
-      count: 9,
+      namespaces: ["namespace1", "namespace2", "namespace3"],
+      count: 3,
     });
   }),
-  http.get(`${API_URL}/apps?page=3`, () => {
+  http.get(`${API_URL}/namespaces/:namespace`, () => {
     return HttpResponse.json({
-      containerNames: ["nginx", "redis", "h", "f"],
+      namespace: "namespace",
+    });
+  }),
+  http.post(`${API_URL}/namespaces`, async ({ request }) => {
+    const requestData = await request.json();
+    console.log(
+      `POST namespaces sent , request:  ${JSON.stringify(requestData)}`
+    );
+    return HttpResponse.json({
+      namespace: "namespace",
     });
   }),
 ];
@@ -116,6 +117,7 @@ export const handlers: HttpHandler[] = [
   ...containersHandlers,
   ...secretsHandlers,
   ...authHandlers,
+  ...namespacesHandlers,
   http.get("/posts", () => {
     console.log('Captured a "GET /posts" request');
     return HttpResponse.json({

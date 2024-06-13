@@ -1,7 +1,7 @@
 import { Outlet, useRouterState } from "@tanstack/react-router";
 import { generateBreadcrumbs } from "@/components/header/breadcrumb/generateBreadcrumbs";
 import Header from "@/components/header/Header";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 
 const Projects: React.FC = () => {
@@ -9,7 +9,13 @@ const Projects: React.FC = () => {
   const { username } = useAuth();
 
   const currentPath: string = router.location.pathname;
-  const [breadcrumbs] = useState(generateBreadcrumbs(currentPath));
+  const [breadcrumbs, setBreadcrumbs] = useState(
+    generateBreadcrumbs(currentPath)
+  );
+
+  useEffect(() => {
+    setBreadcrumbs(generateBreadcrumbs(currentPath));
+  }, [currentPath]);
 
   return (
     <div className="h-screen flex flex-col">
