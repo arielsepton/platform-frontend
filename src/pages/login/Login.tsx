@@ -1,48 +1,15 @@
 /// <reference types="vite-plugin-svgr/client" />
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import React from "react";
 import AppIcon from "@/assets/app-icon.svg?react";
 import Modal from "@/components/modal/Modal";
-import React, { useState } from "react";
 import Typography from "@/components/typography/Typography";
 import Button from "@/components/button/Button";
 import { APP_NAME } from "@/common/consts";
 import Input from "@/components/form/input/Input";
-import { useRouter } from "@tanstack/react-router";
-import { useAuth } from "@/hooks/useAuth";
-import { useDataMutation } from "@/hooks/useDataMutation";
-import { User } from "@/models/user/user";
-import { AuthData } from "@/models/auth/authData";
+import { useLogin } from "@hooks/login/useLogin";
 
 const Login: React.FC = () => {
-  const router = useRouter();
-  const { signIn } = useAuth();
-  const [error, setError] = useState<string | null>(null);
-
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm();
-
-  const { mutateInstance: mutate } = useDataMutation<User>("/auth", undefined, {
-    onSuccess: async (response, user) => {
-      const authData: AuthData = AuthData.fromJson(
-        response.body as { token: string; user: string }
-      );
-      if (authData && authData.token) {
-        signIn(authData.token, user.username);
-        router.invalidate();
-      }
-    },
-    onError: (error) => setError(error.message),
-  });
-
-  const onSubmit: SubmitHandler<FieldValues> = async ({
-    username,
-    password,
-  }) => {
-    await mutate.post.mutateAsync(User.fromJson({ username, password }));
-  };
+  const { register, handleSubmit, formErrors, onSubmit, error } = useLogin();
 
   return (
     <div className="h-screen bg-mono/basic-15">
@@ -72,7 +39,7 @@ const Login: React.FC = () => {
                   {...register("username", {
                     required: "username is required",
                   })}
-                  error={errors.username?.message as string}
+                  error={formErrors.username?.message as string}
                   label="Username"
                   autoComplete="username"
                   placeholder="Insert username..."
@@ -86,7 +53,7 @@ const Login: React.FC = () => {
                       message: "password should be longer than 6 characters",
                     },
                   })}
-                  error={errors.password?.message as string}
+                  error={formErrors.password?.message as string}
                   label="Password"
                   placeholder="Insert password..."
                 />

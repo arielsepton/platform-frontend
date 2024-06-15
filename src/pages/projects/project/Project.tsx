@@ -1,5 +1,5 @@
 import { Outlet, useRouterState } from "@tanstack/react-router";
-import Container from "@/components/container/Container";
+import BackgroundContainer from "@/components/container/Container";
 import Sidebar from "@/components/sidebar/Sidebar";
 
 const Project: React.FC = () => {
@@ -7,9 +7,9 @@ const Project: React.FC = () => {
   return (
     <>
       <Sidebar currentPath={router.location.pathname} />
-      <Container>
+      <BackgroundContainer>
         <Outlet />
-      </Container>
+      </BackgroundContainer>
     </>
   );
 };

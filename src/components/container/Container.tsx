@@ -1,18 +1,18 @@
 import { ReactNode } from "@tanstack/react-router";
 import React from "react";
 
-interface ContainerProps {
-  children?: ReactNode;
+interface BackgroundContainerProps {
+  children: ReactNode;
 }
 
-const Container: React.FC<ContainerProps> = React.memo(
-  ({ children }: ContainerProps) => (
+const BackgroundContainer: React.FC<BackgroundContainerProps> = React.memo(
+  ({ children }: BackgroundContainerProps) => (
     <div className="grow h-full min-w-0 bg-cover bg-no-repeat bg-login-pattern">
       <div className="h-full bg-mono/basic-15 bg-opacity-90">
         <div className="flex h-full">{children}</div>
       </div>
     </div>
-  ),
+  )
 );
 
-export default Container;
+export default BackgroundContainer;

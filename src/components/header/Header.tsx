@@ -1,42 +1,25 @@
 /// <reference types="vite-plugin-svgr/client" />
-import React, { Suspense, useCallback } from "react";
+import React, { useCallback } from "react";
 import AppIcon from "@/assets/app-icon.svg?react";
 import ArrowDown from "@/assets/arrow-down.svg?react";
 import Typography from "@/components/typography/Typography";
 import Breadcrumb, { BreadcrumbItem } from "./breadcrumb/Breadcrumb";
 import { APP_NAME } from "@/common/consts";
-import { useRouter } from "@tanstack/react-router";
 import { useAuth } from "@/hooks/useAuth";
-import { lazy } from "react";
+import getFirstLetter from "@utils/getFirstLetter";
+import { dynamicThumbnailLoader } from "@utils/dynamicComponentLoader";
 
 type HeaderProps = {
   breadcrumbs: BreadcrumbItem[];
   user: string;
 };
 
-function DynamicLoader(thumbnail: number) {
-  const MarkdownPreview = lazy(
-    () =>
-      import(`../../assets/account-thumbnails/color-${thumbnail}.svg?react`),
-  );
-  return (
-    <Suspense fallback={<></>}>
-      <MarkdownPreview />
-    </Suspense>
-  );
-}
-
 const Header = React.memo(({ breadcrumbs, user }: HeaderProps) => {
-  const router = useRouter();
   const { signOut, thumbnail } = useAuth();
-
-  const getFirstLetter: () => string = useCallback(() => {
-    const match = user.match(/([a-zA-Z])/);
-    return match ? match[1] : "";
-  }, [user]);
+  const getFirstLetterOfUser = useCallback(() => getFirstLetter(user), [user]);
 
   return (
-    <div className="w-full text-left bg-mono/basic-16 h-full items-center justify-between gap-4 flex">
+    <div className="w-full text-left bg-mono/basic-16 h-17 items-center justify-between gap-4 flex">
       <nav aria-label="breadcrumb">
         <div className="flex w-fit flex-wrap items-center rounded-md bg-blue-gray-50 bg-opacity-60 py-2 pl-5.5">
           <Typography>
@@ -51,7 +34,12 @@ const Header = React.memo(({ breadcrumbs, user }: HeaderProps) => {
           <div className="flex cursor-pointer items-center antialiased transition-colors duration-100 bg-mono/basic-14 rounded-full h-fit">
             <div className="flex items-center py-2.25 pl-4 pr-5">
               {breadcrumbs.map((breadcrumb) => (
-                <Breadcrumb breadcrumb={breadcrumb} key={breadcrumb.text} />
+                <Breadcrumb
+                  text={breadcrumb.text}
+                  isDropdown={breadcrumb.isDropdown}
+                  shouldAddDivider={breadcrumb.shouldAddDivider}
+                  key={breadcrumb.text}
+                />
               ))}
             </div>
           </div>
@@ -59,16 +47,15 @@ const Header = React.memo(({ breadcrumbs, user }: HeaderProps) => {
       </nav>
       <div className="place-self-end flex items-center h-full pr-5.5">
         <div className="relative flex justify-center items-center">
-          {DynamicLoader(thumbnail)}
+          {dynamicThumbnailLoader(thumbnail)}
           <div className="text-white absolute inset-0 flex justify-center items-center">
-            {getFirstLetter().toUpperCase()}
+            {getFirstLetterOfUser().toUpperCase()}
           </div>
         </div>
         <div
           className="group flex items-center cursor-pointer"
-          onClick={async () => {
+          onClick={() => {
             signOut();
-            router.invalidate();
           }}
         >
           <Typography

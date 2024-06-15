@@ -1,4 +1,4 @@
 export type MenuItem = {
-  label:  string | "divider";
+  label: string | "divider";
   path: string;
 };

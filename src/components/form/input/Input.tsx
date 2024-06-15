@@ -1,9 +1,8 @@
 /// <reference types="vite-plugin-svgr/client" />
 
 import Typography from "@/components/typography/Typography";
-import EyeClosed from "@/assets/eye-closed.svg?react";
-import EyeOpen from "@/assets/eye-open.svg?react";
-import React, { useState, forwardRef, useCallback } from "react";
+import React, { useState, forwardRef } from "react";
+import ShowHideInput from "../showHideInput/ShowHideInput";
 
 interface InputProps {
   type: string;
@@ -14,42 +13,9 @@ interface InputProps {
   className?: string;
 }
 
-interface ToggleComponent {
-  (inputState: InputState, toggleShowIcon: (type: string) => void): JSX.Element;
-}
-
-interface InputState {
-  [key: string]: boolean; // Key is the toggle type (e.g., "password"), value is the show/hide state
-}
-
-const typeToToggleMap: { [key: string]: ToggleComponent } = {
-  password: (
-    inputState: InputState,
-    toggleShowPassword: (type: string) => void,
-  ) => (
-    <div
-      className="absolute top-0 right-0 h-full flex items-center pr-3 cursor-pointer"
-      onClick={() => toggleShowPassword("password")}
-    >
-      {inputState.password ? (
-        <EyeClosed className="text-mono/basic-4" />
-      ) : (
-        <EyeOpen className="text-mono/basic-4" />
-      )}
-    </div>
-  ),
-};
-
 const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
-  ({ type, placeholder, error, label, className, ...props }, ref) => {
-    const [inputState, setInputState] = useState<InputState>({});
-
-    const updateToggleState = useCallback((type: string) => {
-      setInputState((prevState) => ({
-        ...prevState,
-        [type]: !prevState[type],
-      }));
-    }, []);
+  ({ type, error, label, className, ...props }, ref) => {
+    const [showPassword, setShowPassword] = useState(false);
 
     return (
       <div className={`flex flex-col ${className || ""}`}>
@@ -61,8 +27,7 @@ const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
           <input
             ref={ref}
             {...props}
-            type={inputState.password ? "text" : type}
-            placeholder={placeholder}
+            type={showPassword ? "text" : type}
             className={`gap-1 w-full py-2.25 pl-3 pr-2 h-10 text-body-lg focus:outline-none bg-mono/basic-13 rounded-md border text-mono/basic-1
           ${
             error
@@ -70,7 +35,12 @@ const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
               : "border-mono/basic-11 focus:border-green/basic-6"
           }`}
           />
-          {typeToToggleMap[type]?.(inputState, updateToggleState)}
+          {type === "password" && (
+            <ShowHideInput
+              showPassword={showPassword}
+              setShowPassword={setShowPassword}
+            />
+          )}
         </div>
         <Typography
           variant="body-sm"
@@ -82,7 +52,7 @@ const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
         </Typography>
       </div>
     );
-  },
+  }
 );
 
 export default Input;

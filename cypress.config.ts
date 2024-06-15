@@ -10,6 +10,7 @@ export default defineConfig({
       bundler: "vite",
       viteConfig: config,
     },
+    indexHtmlFile: "./index.html",
     viewportHeight: 800,
     viewportWidth: 1280, // macbook pro 13, https://docs.cypress.io/api/commands/viewport
     video: false,
